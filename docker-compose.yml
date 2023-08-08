@@ -1,0 +1,56 @@
+version: '3.3'
+
+services:
+ mysql_db:
+  platform: linux/amd64
+  image: mysql:5.7
+  restart: always
+  env_file:
+   - ./.env
+  environment:
+   MYSQL_DATABASE: $DB_DATABASE
+   MYSQL_USER: $DB_USERNAME
+   MYSQL_PASSWORD: $DB_PASSWORD
+   MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+  ports:
+   - '$DB_PORT:$DB_PORT'
+  expose:
+   - '$DB_PORT'
+  volumes:
+   - mysql_db:/var/lib/mysql
+ app:
+  build: .
+  restart: unless-stopped
+  env_file:
+   - ./.env
+  environment:
+   - DB_TYPE=$DB_TYPE
+   - DB_HOST=mysql_db
+   - DB_PORT=$DB_PORT
+   - DB_USERNAME=$DB_USERNAME
+   - DB_PASSWORD=$DB_PASSWORD
+   - DB_DATABASE=$DB_DATABASE
+  command: npm start
+  ports:
+   - '8080:3000'
+
+  volumes:
+   - .:/app
+  depends_on:
+   - mysql_db
+
+ phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: phpmyadmin
+  links:
+   - mysql_db
+  environment:
+   - PMA_HOST=mysql_db
+   - PMA_PORT=3306
+   - PMA_ARBITRARY=1
+  restart: always
+  ports:
+   - 8081:80
+
+volumes:
+ mysql_db:
