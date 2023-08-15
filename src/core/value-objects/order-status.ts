@@ -1,6 +1,7 @@
 export enum OrderStatus {
-	RECEIVED = "received",
-	PROCESSING = "processing",
-	READY = "ready",
-	FINISHED = "finished",
+	AWAITING_PAYMENT = 'awaiting_payment',
+	RECEIVED = 'received',
+	PROCESSING = 'processing',
+	READY = 'ready',
+	FINISHED = 'finished',
 }

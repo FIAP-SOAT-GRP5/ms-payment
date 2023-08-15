@@ -35,4 +35,8 @@ export class ItemService implements IGetItemService, IPersistenceItemService {
 	findById(id: number): Promise<Item> {
 		return this.itemRepository.findById(id);
 	}
+
+	findAll(): Promise<Item[]> {
+		return this.itemRepository.findAll();
+	}
 }
