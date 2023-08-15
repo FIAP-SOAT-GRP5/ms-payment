@@ -11,7 +11,12 @@ import {
 } from '@nestjs/common';
 import { IGetOrderService } from '../../../core/applications/interfaces/get-order.service.interface';
 import { ApiTags } from '@nestjs/swagger';
-import { CREATE_ORDER_SERVICE, GET_ORDER_SERVICE, LIST_PROCESSING_ORDER_SERVICE, UPDATE_ORDER_STATUS_SERVICE } from '../order.symbols';
+import {
+	CREATE_ORDER_SERVICE,
+	GET_ORDER_SERVICE,
+	LIST_PROCESSING_ORDER_SERVICE,
+	UPDATE_ORDER_STATUS_SERVICE,
+} from '../order.symbols';
 import { IListProcessingOrdersService } from '../../../core/applications/interfaces/list-processing-orders.service.interface';
 import { Response } from 'express';
 import { ICreateOrderService } from '../../../core/applications/interfaces/create-order.service.interface';
@@ -25,17 +30,33 @@ import { InvalidOrderStatusError } from '../../../core/errors/invalid-order-stat
 @ApiTags('Order')
 export class OrderController {
 	constructor(
-		@Inject(CREATE_ORDER_SERVICE) private readonly createOrderService: ICreateOrderService,
+		@Inject(CREATE_ORDER_SERVICE)
+		private readonly createOrderService: ICreateOrderService,
 		@Inject(GET_ORDER_SERVICE) private readonly getOrderService: IGetOrderService,
 		@Inject(LIST_PROCESSING_ORDER_SERVICE)
 		private readonly listProcessingOrdersService: IListProcessingOrdersService,
-		@Inject(UPDATE_ORDER_STATUS_SERVICE) private readonly updateOrderStatusService: IUpdateOrderStatusService,
+		@Inject(UPDATE_ORDER_STATUS_SERVICE)
+		private readonly updateOrderStatusService: IUpdateOrderStatusService
 	) {}
 
 	@Get('list-processing-orders')
 	public async listProcessingOrders(@Res() res: Response): Promise<void> {
 		try {
 			const list = await this.listProcessingOrdersService.listProcessingOrders();
+			if (!list) {
+				res.status(404).send('Orders not found');
+			} else {
+				res.status(200).send({ list });
+			}
+		} catch (error) {
+			res.status(500).send(error.message);
+		}
+	}
+
+	@Get('list-all-orders')
+	public async listAllOrders(@Res() res: Response): Promise<void> {
+		try {
+			const list = await this.listProcessingOrdersService.listAllOrders();
 			if (!list) {
 				res.status(404).send('Orders not found');
 			} else {
@@ -64,7 +85,10 @@ export class OrderController {
 	}
 
 	@Post()
-	public async create(@Res() res: Response, @Body() body: CreateOrderBodyDto): Promise<void> {
+	public async create(
+		@Res() res: Response,
+		@Body() body: CreateOrderBodyDto
+	): Promise<void> {
 		try {
 			const order = await this.createOrderService.create(body);
 			res.status(201).send({ order });
@@ -78,7 +102,10 @@ export class OrderController {
 	}
 
 	@Put(':id/status/processing')
-	public async updateStatusProcessing(@Res() res: Response, @Param('id', ParseIntPipe) id: number): Promise<void> {
+	public async updateStatusProcessing(
+		@Res() res: Response,
+		@Param('id', ParseIntPipe) id: number
+	): Promise<void> {
 		try {
 			const order = await this.updateOrderStatusService.updateStatusProcessing(id);
 			res.status(200).send({ order });
@@ -94,7 +121,10 @@ export class OrderController {
 	}
 
 	@Put(':id/status/ready')
-	public async updateStatusReady(@Res() res: Response, @Param('id', ParseIntPipe) id: number): Promise<void> {
+	public async updateStatusReady(
+		@Res() res: Response,
+		@Param('id', ParseIntPipe) id: number
+	): Promise<void> {
 		try {
 			const order = await this.updateOrderStatusService.updateStatusReady(id);
 			res.status(200).send({ order });
@@ -110,9 +140,31 @@ export class OrderController {
 	}
 
 	@Put(':id/status/finished')
-	public async updateStatusFinished(@Res() res: Response, @Param('id', ParseIntPipe) id: number): Promise<void> {
+	public async updateStatusFinished(
+		@Res() res: Response,
+		@Param('id', ParseIntPipe) id: number
+	): Promise<void> {
 		try {
 			const order = await this.updateOrderStatusService.updateStatusFinished(id);
+			res.status(200).send({ order });
+		} catch (error) {
+			if (error instanceof OrderNotFoundError) {
+				res.status(404).send(error.message);
+			} else if (error instanceof InvalidOrderStatusError) {
+				res.status(409).send(error.message);
+			} else {
+				res.status(500).send(error.message);
+			}
+		}
+	}
+
+	@Put(':id/status/received')
+	public async updateStatusReceived(
+		@Res() res: Response,
+		@Param('id', ParseIntPipe) id: number
+	): Promise<void> {
+		try {
+			const order = await this.updateOrderStatusService.updateStatusReceived(id);
 			res.status(200).send({ order });
 		} catch (error) {
 			if (error instanceof OrderNotFoundError) {

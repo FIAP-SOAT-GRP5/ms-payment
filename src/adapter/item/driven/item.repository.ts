@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from 'src/core/domain/item.entity';
 import { TypeItem } from 'src/core/value-objects/type-item';
 import { IItemRepositoryPort } from 'src/core/applications/ports/item-repository.port';
+
 import { ItemToCreateDto } from '../../../core/dtos/item-to-create.dto';
 import { ItemToUpdateDto } from '../../../core/dtos/item-to-update.dto';
 
@@ -22,7 +23,7 @@ export class ItemRepository implements IItemRepositoryPort {
 	updateItem(id: number, itemToUpdate: ItemToUpdateDto) {
 		return this.itemRepository.save({
 			id,
-			...itemToUpdate
+			...itemToUpdate,
 		});
 	}
 
@@ -72,5 +73,9 @@ export class ItemRepository implements IItemRepositoryPort {
 				id,
 			},
 		});
+	}
+
+	findAll(): Promise<Item[]> {
+		return this.itemRepository.find();
 	}
 }
