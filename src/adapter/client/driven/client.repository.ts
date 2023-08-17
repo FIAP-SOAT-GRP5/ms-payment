@@ -1,4 +1,4 @@
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -9,7 +9,8 @@ import { IClientRepositoryPort } from '../../../core/applications/ports/client-r
 @Injectable()
 export class ClientRepository implements IClientRepositoryPort {
 	constructor(
-		@InjectRepository(Client) private clientRepository: Repository<Client>
+		@InjectRepository(Client)
+		private clientRepository: Repository<Client>
 	) {}
 	findAllClient(): Promise<Client[]> {
 		return this.clientRepository.find();

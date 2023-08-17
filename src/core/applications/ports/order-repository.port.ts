@@ -13,10 +13,10 @@ export interface IOrderRepositoryPort {
 	create(orderToCreate: OrderToCreateDto): Promise<Order>;
 
 	updateStatus(id: number, status: OrderStatus): Promise<boolean>;
-	updateStatusAndPaymentStatus(
-		id: number,
-		status: OrderStatus,
-		paymentStatus: PaymentStatus
-	): Promise<boolean>;
+	// updateStatusAndPaymentStatus(
+	// 	id: number,
+	// 	status: OrderStatus,
+	// 	paymentStatus: PaymentStatus
+	// ): Promise<boolean>;
 	updateFinishedAt(id: number): Promise<boolean>;
 }

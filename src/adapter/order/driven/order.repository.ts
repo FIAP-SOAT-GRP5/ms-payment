@@ -38,23 +38,24 @@ export class OrderRepository implements IOrderRepositoryPort {
 		});
 		return true;
 	}
-	async updateStatusAndPaymentStatus(
-		id: number,
-		status: OrderStatus,
-		paymentStatus: PaymentStatus
-	): Promise<boolean> {
-		const exists = this.orderRepository.exist({
-			where: {
-				id,
-			},
-		});
-		if (!exists) return false;
-		await this.orderRepository.update(id, {
-			status,
-			status_payment: paymentStatus,
-		});
-		return true;
-	}
+	// async updateStatusAndPaymentStatus(
+	// 	id: number,
+	// 	status: OrderStatus,
+	// 	paymentStatus: PaymentStatus
+	// ): Promise<boolean> {
+	// 	const exists = this.orderRepository.exist({
+	// 		where: {
+	// 			id,
+	// 		},
+	// 	});
+	// 	if (!exists) return false;
+	// 	await this.orderRepository.update(id, {
+	// 		status,
+	// 		status_payment: paymentStatus,
+	// 	});
+	// 	return true;
+	// }
+
 	create(orderToCreate: OrderToCreateDto): Promise<Order> {
 		return this.orderRepository.save(orderToCreate).then((order) => {
 			return this.findById(order.id);

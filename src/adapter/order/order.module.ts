@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { OrderController } from './driver/order.controller';
-import { CREATE_ORDER_SERVICE, GET_ORDER_SERVICE, LIST_PROCESSING_ORDER_SERVICE, UPDATE_ORDER_STATUS_SERVICE } from './order.symbols';
+import {
+	CREATE_ORDER_SERVICE,
+	GET_ORDER_SERVICE,
+	LIST_PROCESSING_ORDER_SERVICE,
+	UPDATE_ORDER_STATUS_SERVICE,
+} from './order.symbols';
 import { OrderRepository } from './driven/order.repository';
 import { buildGetOrderService } from './factories/get-order.service.factory';
 import { buildListProcessingOrdersService } from './factories/list-processing-orders.service.factory';
@@ -13,10 +18,15 @@ import { buildUpdateOrderStatusService } from './factories/update-order-status.s
 import { FakeNotifyOrderService } from '../notification/driven/fake-notify-order.service';
 import { NotificationModule } from '../notification/notification.module';
 import { CheckoutModule } from '../checkout/checkout.module';
-import { FakeCheckoutService } from '../checkout/driven/fake-checkout.service';
+import { FakeCheckoutService } from 'src/core/applications/services/fake-checkout.service';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Order]), ItemModule, NotificationModule, CheckoutModule],
+	imports: [
+		TypeOrmModule.forFeature([Order]),
+		ItemModule,
+		NotificationModule,
+		CheckoutModule,
+	],
 	providers: [
 		OrderRepository,
 		{

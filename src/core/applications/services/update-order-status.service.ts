@@ -53,20 +53,4 @@ export class UpdateOrderStatusService implements IUpdateOrderStatusService {
 		await this.orderRepository.updateFinishedAt(id);
 		return this.orderRepository.findById(id);
 	}
-
-	async updateStatusAndPaymentStatus(id: number): Promise<Order> {
-		// TEMPORARIO, APENAS PARA TESTE
-		const listPaymentStatus = [PaymentStatus.APPROVED, PaymentStatus.REFUSED];
-		const randomPaymentStatus =
-			listPaymentStatus[Math.floor(Math.random() * listPaymentStatus.length)];
-		// TEMPORARIO, APENAS PARA TESTE
-
-		await this.validateOrderAndStatus(id, OrderStatus.AWAITING_PAYMENT);
-		await this.orderRepository.updateStatusAndPaymentStatus(
-			id,
-			OrderStatus.RECEIVED,
-			randomPaymentStatus
-		);
-		return this.orderRepository.findById(id);
-	}
 }
