@@ -8,7 +8,6 @@ import { INotifyOrderPort } from '../ports/notify-order.port';
 import { IOrderRepositoryPort } from '../ports/order-repository.port';
 
 import { OrderStatus } from '../../value-objects/order-status';
-import { PaymentStatus } from 'src/core/value-objects/payment-status';
 
 export class UpdateOrderStatusService implements IUpdateOrderStatusService {
 	constructor(

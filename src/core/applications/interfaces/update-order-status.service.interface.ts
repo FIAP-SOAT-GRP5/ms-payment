@@ -1,3 +1,4 @@
+import PaymentStatusDto from 'src/adapter/checkout/dtos/payment-status.dto';
 import { Order } from '../../domain/order.entity';
 
 export interface IUpdateOrderStatusService {

@@ -4,6 +4,7 @@ import {
 	CREATE_ORDER_SERVICE,
 	GET_ORDER_SERVICE,
 	LIST_PROCESSING_ORDER_SERVICE,
+	UPDATE_ORDER_PAYMENT_STATUS_SERVICE,
 	UPDATE_ORDER_STATUS_SERVICE,
 } from './order.symbols';
 import { OrderRepository } from './driven/order.repository';
@@ -14,11 +15,11 @@ import { Order } from '../../core/domain/order.entity';
 import { buildCreateOrderService } from './factories/create-order.service.factory';
 import { ItemModule } from '../item/item.module';
 import { GET_ITEM_SERVICE } from '../item/item.symbols';
-import { buildUpdateOrderStatusService } from './factories/update-order-status.service.factory';
+import { buildUpdateOrderPaymentStatusService } from './factories/update-order-payment-status.service.factory';
 import { FakeNotifyOrderService } from '../notification/driven/fake-notify-order.service';
 import { NotificationModule } from '../notification/notification.module';
 import { CheckoutModule } from '../checkout/checkout.module';
-import { FakeCheckoutService } from 'src/core/applications/services/fake-checkout.service';
+import { buildUpdateOrderStatusService } from './factories/update-order-status.service.factory copy';
 
 @Module({
 	imports: [
@@ -31,7 +32,7 @@ import { FakeCheckoutService } from 'src/core/applications/services/fake-checkou
 		OrderRepository,
 		{
 			provide: CREATE_ORDER_SERVICE,
-			inject: [OrderRepository, GET_ITEM_SERVICE, FakeCheckoutService],
+			inject: [OrderRepository, GET_ITEM_SERVICE],
 			useFactory: buildCreateOrderService,
 		},
 		{
@@ -48,6 +49,11 @@ import { FakeCheckoutService } from 'src/core/applications/services/fake-checkou
 			provide: UPDATE_ORDER_STATUS_SERVICE,
 			inject: [OrderRepository, FakeNotifyOrderService],
 			useFactory: buildUpdateOrderStatusService,
+		},
+		{
+			provide: UPDATE_ORDER_PAYMENT_STATUS_SERVICE,
+			inject: [OrderRepository, FakeNotifyOrderService],
+			useFactory: buildUpdateOrderPaymentStatusService,
 		},
 	],
 	controllers: [OrderController],

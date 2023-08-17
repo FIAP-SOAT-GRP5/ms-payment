@@ -15,6 +15,7 @@ import {
 	CREATE_ORDER_SERVICE,
 	GET_ORDER_SERVICE,
 	LIST_PROCESSING_ORDER_SERVICE,
+	UPDATE_ORDER_PAYMENT_STATUS_SERVICE,
 	UPDATE_ORDER_STATUS_SERVICE,
 } from '../order.symbols';
 import { IListProcessingOrdersService } from '../../../core/applications/interfaces/list-processing-orders.service.interface';
@@ -25,6 +26,8 @@ import { OrderWithoutItemsError } from '../../../core/errors/order-without-items
 import { IUpdateOrderStatusService } from '../../../core/applications/interfaces/update-order-status.service.interface';
 import { OrderNotFoundError } from '../../../core/errors/order-not-found.error';
 import { InvalidOrderStatusError } from '../../../core/errors/invalid-order-status.error';
+import { IUpdateOrderStatusAndPaymentStatusService } from 'src/core/applications/interfaces/update-order-status-payment-status.service.interface';
+import PaymentStatusDto from 'src/adapter/checkout/dtos/payment-status.dto';
 
 @Controller('order')
 @ApiTags('Order')
@@ -36,7 +39,9 @@ export class OrderController {
 		@Inject(LIST_PROCESSING_ORDER_SERVICE)
 		private readonly listProcessingOrdersService: IListProcessingOrdersService,
 		@Inject(UPDATE_ORDER_STATUS_SERVICE)
-		private readonly updateOrderStatusService: IUpdateOrderStatusService
+		private readonly updateOrderStatusService: IUpdateOrderStatusService,
+		@Inject(UPDATE_ORDER_PAYMENT_STATUS_SERVICE)
+		private readonly updateOrderStatusPaymentService: IUpdateOrderStatusAndPaymentStatusService
 	) {}
 
 	@Get('list-processing-orders')
@@ -166,6 +171,31 @@ export class OrderController {
 		try {
 			const order = await this.updateOrderStatusService.updateStatusReceived(id);
 			res.status(200).send({ order });
+		} catch (error) {
+			if (error instanceof OrderNotFoundError) {
+				res.status(404).send(error.message);
+			} else if (error instanceof InvalidOrderStatusError) {
+				res.status(409).send(error.message);
+			} else {
+				res.status(500).send(error.message);
+			}
+		}
+	}
+
+	@Post(':id/status/payment')
+	public async payment(
+		@Res() res: Response,
+		@Param('id', ParseIntPipe) id: number,
+		@Body() paymentStatusDto: PaymentStatusDto
+	) {
+		const { paymentStatus } = paymentStatusDto;
+
+		console.log(paymentStatusDto);
+		try {
+			await this.updateOrderStatusPaymentService.updateOrderStatusAndPaymentStatus(
+				{ id, paymentStatus }
+			);
+			res.status(200);
 		} catch (error) {
 			if (error instanceof OrderNotFoundError) {
 				res.status(404).send(error.message);
