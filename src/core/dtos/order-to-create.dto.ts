@@ -4,7 +4,7 @@ import { PaymentStatus } from '../value-objects/payment-status';
 class OrderItemToCreateDto {
 	price: number;
 	quantity: number;
-	item: { id: number };
+	item: { id: number, name: string };
 }
 
 export class OrderToCreateDto {

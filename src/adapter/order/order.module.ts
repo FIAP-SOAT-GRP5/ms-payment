@@ -19,6 +19,7 @@ import { buildUpdateOrderPaymentStatusService } from './factories/update-order-p
 import { FakeNotifyOrderService } from '../notification/driven/fake-notify-order.service';
 import { NotificationModule } from '../notification/notification.module';
 import { CheckoutModule } from '../checkout/checkout.module';
+import { CheckoutService } from '../checkout/driven/checkout.service';
 import { buildUpdateOrderStatusService } from './factories/update-order-status.service.factory copy';
 
 @Module({
@@ -32,7 +33,7 @@ import { buildUpdateOrderStatusService } from './factories/update-order-status.s
 		OrderRepository,
 		{
 			provide: CREATE_ORDER_SERVICE,
-			inject: [OrderRepository, GET_ITEM_SERVICE],
+			inject: [OrderRepository, GET_ITEM_SERVICE, CheckoutService],
 			useFactory: buildCreateOrderService,
 		},
 		{

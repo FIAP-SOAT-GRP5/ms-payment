@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+
+import { CheckoutService } from './driven/checkout.service';
 
 @Module({
-	providers: [],
-	controllers: [],
-	imports: [],
+	providers: [CheckoutService],
+	exports: [CheckoutService],
+	imports: [HttpModule],
 })
+
 export class CheckoutModule {}
