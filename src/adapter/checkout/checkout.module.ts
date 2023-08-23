@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 
-import { FakeCheckoutService } from './driven/fake-checkout.service';
+import { CheckoutService } from './driven/checkout.service';
 
 @Module({
-	providers: [FakeCheckoutService],
-	exports: [FakeCheckoutService],
+	providers: [CheckoutService],
+	exports: [CheckoutService],
 	imports: [HttpModule],
 })
+
 export class CheckoutModule {}

@@ -16,7 +16,7 @@ export class CreateOrderService implements ICreateOrderService {
 	constructor(
 		private readonly orderRepository: IOrderRepositoryPort,
 		private readonly getItemService: IGetItemService,
-		private readonly checkout: ICheckoutPort
+		private readonly checkout: ICheckoutPort,
 	) {}
 	async create(dto: CreateOrderDto): Promise<Order> {
 		const items = await Promise.all(
@@ -26,6 +26,7 @@ export class CreateOrderService implements ICreateOrderService {
 					quantity: item.quantity,
 					price: itemEntity.price,
 					id: itemEntity.id,
+					name: itemEntity.name
 				};
 			})
 		);
@@ -36,13 +37,18 @@ export class CreateOrderService implements ICreateOrderService {
 			status: OrderStatus.AWAITING_PAYMENT,
 			status_payment: PaymentStatus.PROCESSING,
 			orderItems: items.map((item) => ({
-				item: { id: item.id },
+				item: { id: item.id, name: item.name },
 				price: item.price,
-				quantity: item.quantity,
+				quantity: item.quantity
 			})),
 		};
 		const order = await this.orderRepository.create(data);
-		await this.checkout.doPayment(order.id, data);
-		return order;
+		const paymentUrl = await this.checkout.doPayment(order.id, data);
+		const response = {
+			...order,
+			...paymentUrl
+		}
+
+		return response;
 	}
 }

@@ -13,7 +13,7 @@ import { buildUpdateOrderStatusService } from './factories/update-order-status.s
 import { FakeNotifyOrderService } from '../notification/driven/fake-notify-order.service';
 import { NotificationModule } from '../notification/notification.module';
 import { CheckoutModule } from '../checkout/checkout.module';
-import { FakeCheckoutService } from '../checkout/driven/fake-checkout.service';
+import { CheckoutService } from '../checkout/driven/checkout.service';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Order]), ItemModule, NotificationModule, CheckoutModule],
@@ -21,7 +21,7 @@ import { FakeCheckoutService } from '../checkout/driven/fake-checkout.service';
 		OrderRepository,
 		{
 			provide: CREATE_ORDER_SERVICE,
-			inject: [OrderRepository, GET_ITEM_SERVICE, FakeCheckoutService],
+			inject: [OrderRepository, GET_ITEM_SERVICE, CheckoutService],
 			useFactory: buildCreateOrderService,
 		},
 		{
