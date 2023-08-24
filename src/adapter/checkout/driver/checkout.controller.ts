@@ -2,12 +2,12 @@ import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
-import { IUpdateOrderStatusAndPaymentStatusService } from 'src/core/applications/interfaces/update-order-status-payment-status.service.interface';
 import PaymentStatusDto from '../dtos/payment-status.dto';
 
 import { UPDATE_PAYMENT_STATUS } from '../checkout.symbols';
 import { OrderNotFoundError } from 'src/core/errors/order-not-found.error';
 import { InvalidOrderStatusError } from 'src/core/errors/invalid-order-status.error';
+import { IUpdateOrderStatusAndPaymentStatusService } from 'src/core/applications/interfaces/update-order-status-payment-status.service.interface';
 
 @Controller('payment')
 @ApiTags('Payment')
