@@ -58,11 +58,41 @@ export class OrderRepository implements IOrderRepositoryPort {
 		return true;
 	}
 
-	create(orderToCreate: OrderToCreateDto): Promise<Order> {
+	async updateOrderPaymentStatusProcessing(
+		id: number
+	): Promise<Order> {
+		await this.orderRepository.update(id, {
+			status_payment: PaymentStatus.PROCESSING,
+		});
+		return this.findById(id);
+	}
+
+	async updateOrderPaymentStatusApproved(
+		id: number
+	): Promise<Order> {
+		await this.orderRepository.update(id, {
+			status_payment: PaymentStatus.APPROVED,
+			status: OrderStatus.RECEIVED,
+		});
+		return await this.findById(id);
+	}
+
+	async updateOrderPaymentStatusRefused(
+		id: number
+	): Promise<Order> {
+		await this.orderRepository.update(id, {
+			status_payment: PaymentStatus.REFUSED,
+			status: OrderStatus.CANCELED,
+		});
+		return this.findById(id);
+	}
+
+	async create(orderToCreate: OrderToCreateDto): Promise<Order> {
 		return this.orderRepository.save(orderToCreate).then((order) => {
 			return this.findById(order.id);
 		});
 	}
+
 	findById(id: number): Promise<Order> {
 		return this.orderRepository.findOne({
 			where: {
@@ -76,10 +106,14 @@ export class OrderRepository implements IOrderRepositoryPort {
 			],
 		});
 	}
-	listProcessingOrders(): Promise<Order[]> {
-		return this.orderRepository.find({
+	async listProcessingOrders(): Promise<Order[]> {
+		
+		const ready = await this.orderRepository.find({
 			where: {
-				status: In([OrderStatus.PROCESSING, OrderStatus.RECEIVED]),
+				status: In([OrderStatus.READY]),
+			},
+			order: {
+				createdAt: 'ASC',
 			},
 			relations: [
 				'orderItems',
@@ -88,7 +122,37 @@ export class OrderRepository implements IOrderRepositoryPort {
 				'orderItems.item.category',
 			],
 		});
+		const processing = await this.orderRepository.find({
+			where: {
+				status: In([OrderStatus.PROCESSING]),
+			},
+			order: {
+				createdAt: 'ASC',
+			},
+			relations: [
+				'orderItems',
+				'client',
+				'orderItems.item',
+				'orderItems.item.category',
+			],
+		});
+		const received = await this.orderRepository.find({
+			where: {
+				status: In([OrderStatus.RECEIVED]),
+			},
+			order: {
+				createdAt: 'ASC',
+			},
+			relations: [
+				'orderItems',
+				'client',
+				'orderItems.item',
+				'orderItems.item.category',
+			],
+		});
+		return ready.concat(processing, received)
 	}
+
 	listAllOrders(): Promise<Order[]> {
 		return this.orderRepository.find({
 			where: {
@@ -108,4 +172,5 @@ export class OrderRepository implements IOrderRepositoryPort {
 			],
 		});
 	}
+
 }

@@ -19,4 +19,10 @@ export interface IOrderRepositoryPort {
 		id: number,
 		paymentStatus: PaymentStatus
 	): Promise<boolean>;
+
+	updateOrderPaymentStatusProcessing(id: number): Promise<Order>;
+	updateOrderPaymentStatusApproved(id: any): Promise<Order>;
+	updateOrderPaymentStatusRefused(id: number): Promise<Order>;
+
+
 }

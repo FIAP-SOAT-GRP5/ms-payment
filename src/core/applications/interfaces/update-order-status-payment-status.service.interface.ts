@@ -5,4 +5,8 @@ export interface IUpdateOrderStatusAndPaymentStatusService {
 	updateOrderStatusAndPaymentStatus(
 		ipaymentStatusDto: PaymentStatusDto
 	): Promise<Order>;
+	
+	updateOrderPaymentStatusProcessing(id: number): Promise<Order>;
+	updateOrderPaymentStatusApproved(id: any): Promise<Order>;
+	updateOrderPaymentStatusRefused(id: number): Promise<Order>;
 }

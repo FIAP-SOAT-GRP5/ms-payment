@@ -3,14 +3,9 @@ import { ICheckoutPort, IPaymentUrl } from '../../../core/applications/ports/che
 
 import { OrderToCreateDto } from 'src/core/dtos/order-to-create.dto';
 
-const mercadopago = require('mercadopago')
+import * as mercadopago from 'mercadopago';
 
-import env from '../../../config/env';
 import { MercadoPagoServiceError } from 'src/core/errors/mercadopago-service-error';
-
-mercadopago.configure({
-    access_token: env.MP_ACCESS_TOKEN
-});
 
 @Injectable()
 export class CheckoutService implements ICheckoutPort {
@@ -26,7 +21,10 @@ export class CheckoutService implements ICheckoutPort {
 		})
 
 		let preference = {
-			items: checkoutItems
+			items: checkoutItems,
+			metadata: {
+				order_id: id
+			}
 		};
 
 		const paymentUrl = mercadopago.preferences.create(preference)
@@ -40,6 +38,8 @@ export class CheckoutService implements ICheckoutPort {
 
 		return paymentUrl
 	}
+
+	
 }
 
 

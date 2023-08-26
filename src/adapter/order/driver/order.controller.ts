@@ -27,7 +27,7 @@ import { IUpdateOrderStatusService } from '../../../core/applications/interfaces
 import { OrderNotFoundError } from '../../../core/errors/order-not-found.error';
 import { InvalidOrderStatusError } from '../../../core/errors/invalid-order-status.error';
 import { IUpdateOrderStatusAndPaymentStatusService } from 'src/core/applications/interfaces/update-order-status-payment-status.service.interface';
-import PaymentStatusDto from 'src/adapter/checkout/dtos/payment-status.dto';
+import * as mercadopago from 'mercadopago';
 
 @Controller('order')
 @ApiTags('Order')
@@ -48,6 +48,7 @@ export class OrderController {
 	public async listProcessingOrders(@Res() res: Response): Promise<void> {
 		try {
 			const list = await this.listProcessingOrdersService.listProcessingOrders();
+			console.log(list)
 			if (!list) {
 				res.status(404).send('Orders not found');
 			} else {
@@ -182,20 +183,27 @@ export class OrderController {
 		}
 	}
 
-	@Post(':id/status/payment')
+	@Post('status/payment')
 	public async payment(
 		@Res() res: Response,
-		@Param('id', ParseIntPipe) id: number,
-		@Body() paymentStatusDto: PaymentStatusDto
+		@Body() webhookBody: any
 	) {
-		const { paymentStatus } = paymentStatusDto;
-
-		console.log(paymentStatusDto);
 		try {
-			await this.updateOrderStatusPaymentService.updateOrderStatusAndPaymentStatus(
-				{ id, paymentStatus }
-			);
-			res.status(200);
+			const { data } = webhookBody;
+			const { id } = data;
+
+			const paymentData = await mercadopago.payment.get(id);
+
+			const { metadata, status } = paymentData.body
+			const { order_id } = metadata;
+			if (status === 'approved') {
+				const order = await this.updateOrderStatusPaymentService.updateOrderPaymentStatusApproved(order_id);
+				console.log(order)
+				return order;
+			}
+			if (status === 'rejected') await this.updateOrderStatusPaymentService.updateOrderPaymentStatusRefused(order_id);
+			
+			res.status(200).send();
 		} catch (error) {
 			if (error instanceof OrderNotFoundError) {
 				res.status(404).send(error.message);

@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDbConfig } from './config/database';
 import { AdapterModule } from './adapter/adapter.module';
 import { HttpModule } from '@nestjs/axios';
-import { WebhookModule } from './adapter/webhook/webhook.module';
+import './config/mercadopago';
 
 @Module({
 	imports: [
@@ -12,7 +12,6 @@ import { WebhookModule } from './adapter/webhook/webhook.module';
 		}),
 		AdapterModule,
 		HttpModule,
-		
 	],
 })
 export class AppModule {}
