@@ -1,4 +1,4 @@
-import { Item } from 'src/domain/entities/item.entity';
+import { Item } from '../../entities/item.entity';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
 import { IItemGateway } from '../../interfaces/Item/item.gateway.interface';
 

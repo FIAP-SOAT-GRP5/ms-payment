@@ -1,13 +1,8 @@
-import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { CheckoutGateway } from './driven/checkout.gateway';
+import { MercadoPagoExternal } from './mercado-pago.external';
 
 @Module({
-	providers: [
-		CheckoutGateway,
-	],
-	exports: [CheckoutGateway],
-	imports: [HttpModule],
+	providers: [MercadoPagoExternal],
+	exports: [MercadoPagoExternal],
 })
-
 export class CheckoutModule {}

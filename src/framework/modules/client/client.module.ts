@@ -1,26 +1,38 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Client } from '../../../domain/entities/client.entity';
+import { buildClientController } from '../../../domain/factories/client/client.controller.factory';
+import { buildClientGateway } from '../../../domain/factories/client/client.gateway.factory';
 import { buildGetClientUseCase } from '../../../domain/factories/client/get-client.use-case.factory';
-import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '../../../domain/symbols/client.symbols';
-import { ClientGateway } from './driven/client.repository';
-import { ClientController } from './driver/client.controller';
+import { CLIENT_CONTROLLER, CLIENT_GATEWAY, CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '../../../domain/symbols/client.symbols';
+import { ClientEntity } from '../../entities/client.entity';
+import { ClientApi } from './client.api';
+import { ClientRepository } from './client.repository';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Client])],
+	imports: [TypeOrmModule.forFeature([ClientEntity])],
 	providers: [
-		ClientGateway,
+		ClientRepository,
+		{
+			provide: CLIENT_CONTROLLER,
+			inject: [GET_CLIENT_USE_CASE, CREATE_CLIENT_USE_CASE],
+			useFactory: buildClientController,
+		},
+		{
+			provide: CLIENT_GATEWAY,
+			inject: [ClientRepository],
+			useFactory: buildClientGateway,
+		},
 		{
 			provide: GET_CLIENT_USE_CASE,
-			inject: [ClientGateway],
+			inject: [CLIENT_GATEWAY],
 			useFactory: buildGetClientUseCase,
 		},
 		{
 			provide: CREATE_CLIENT_USE_CASE,
-			inject: [ClientGateway],
+			inject: [CLIENT_GATEWAY],
 			useFactory: buildGetClientUseCase,
 		},
 	],
-	controllers: [ClientController],
+	controllers: [ClientApi],
 })
 export class ClientModule {}

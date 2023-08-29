@@ -1,12 +1,9 @@
 import { Order } from '../../entities/order.entity';
-import { IUpdateOrderStatusUseCase } from '../../interfaces/order/update-order-status.use-case.interface';
-
 import { InvalidOrderStatusError } from '../../errors/invalid-order-status.error';
 import { OrderNotFoundError } from '../../errors/order-not-found.error';
-
 import { INotifyOrderGateway } from '../../interfaces/order/notify-order.gateway.interface';
 import { IOrderGateway } from '../../interfaces/order/order.gateway.interface';
-
+import { IUpdateOrderStatusUseCase } from '../../interfaces/order/update-order-status.use-case.interface';
 import { OrderStatus } from '../../value-objects/order-status';
 
 export class UpdateOrderStatusService implements IUpdateOrderStatusUseCase {

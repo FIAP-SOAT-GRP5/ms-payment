@@ -1,4 +1,4 @@
-import { Item } from 'src/domain/entities/item.entity';
+import { Item } from "../../entities/item.entity";
 
 export interface IGetItemUseCase {
 	findById(id: number): Promise<Item>;

@@ -1,11 +1,8 @@
-import { Order } from 'src/domain/entities/order.entity';
-import PaymentStatusDto from 'src/framework/modules/checkout/dtos/payment-status.dto';
+import PaymentStatusDto from "../../dtos/payment-status.dto";
+import { Order } from "../../entities/order.entity";
 
 export interface IUpdateOrderPaymentUseCase {
-	updateOrderStatusAndPaymentStatus(
-		ipaymentStatusDto: PaymentStatusDto
-	): Promise<Order>;
-
+	updateOrderStatusAndPaymentStatus(ipaymentStatusDto: PaymentStatusDto): Promise<Order>;
 	updateOrderPaymentStatusProcessing(id: number): Promise<Order>;
 	updateOrderPaymentStatusApproved(id: number): Promise<Order>;
 	updateOrderPaymentStatusRefused(id: number): Promise<Order>;

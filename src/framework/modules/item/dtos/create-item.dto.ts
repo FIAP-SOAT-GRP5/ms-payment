@@ -3,7 +3,6 @@ import { ToInt } from "../../../decorators/toint.decorator";
 import { ToNumber } from "../../../decorators/tonumber.decorator";
 
 export class CreateItemDto {
-
 	@ApiProperty()
 	@ToInt()
 	name: string;

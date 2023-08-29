@@ -1,1 +1,0 @@
-export const UPDATE_PAYMENT_STATUS = Symbol('UPDATE_PAYMENT_STATUS');

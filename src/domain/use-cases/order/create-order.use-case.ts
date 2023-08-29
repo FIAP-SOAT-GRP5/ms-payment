@@ -1,5 +1,5 @@
+import { CreateOrderResponse } from '../../dtos/create-order-response.dto';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
-import { Order } from '../../entities/order.entity';
 import { OrderWithoutItemsError } from '../../errors/order-without-items.error';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
 import { ICheckoutGateway } from '../../interfaces/checkout/checkout.gateway.interface';
@@ -15,7 +15,7 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
 		private readonly checkoutGateway: ICheckoutGateway,
 	) {}
 
-	async create(dto: CreateOrderDto): Promise<Order> {
+	async create(dto: CreateOrderDto): Promise<CreateOrderResponse> {
 		const items = await Promise.all(
 			dto.itemsIds.map(async (item) => {
 				const itemEntity = await this.getItemUseCase.findById(item.id);

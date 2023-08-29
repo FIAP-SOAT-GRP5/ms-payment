@@ -20,8 +20,6 @@ const envSchema = z.object({
 	MP_ACCESS_TOKEN: z.string(),
 	MP_USER_ID: z.string(),
 	MP_LOJA_ID: z.string(),
-
-	NGROK_API_KEY: z.string(),
 });
 
 const envTestSchema = z.object({
@@ -39,8 +37,6 @@ const envTestSchema = z.object({
 	MP_ACCESS_TOKEN: z.string().optional(),
 	MP_USER_ID: z.string().optional(),
 	MP_LOJA_ID: z.string().optional(),
-
-	NGROK_API_KEY: z.string(),
 });
 
 const getEnv = () => {

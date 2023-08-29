@@ -1,17 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IEntity } from "../interfaces/entity.interface";
 
-@Entity('category')
-export class Category {
-	@ApiProperty()
-	@PrimaryGeneratedColumn()
+export class Category implements IEntity {
 	id: number;
-
-	@Column()
-	@ApiProperty()
 	name: string;
-
-	@Column()
-	@ApiProperty()
 	description?: string;
+
+	getId(): number {
+		return this.id;
+	}
 }

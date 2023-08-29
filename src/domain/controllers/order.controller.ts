@@ -1,8 +1,10 @@
-import { IUpdateOrderPaymentUseCase } from 'src/domain/interfaces/order/update-order-payment.use-case.interface';
-import { CreateOrderBodyDto } from '../../framework/modules/order/dtos/create-order.dto';
+import { CreateOrderResponse } from '../dtos/create-order-response.dto';
+import { CreateOrderDto } from '../dtos/create-order.dto';
 import { Order } from '../entities/order.entity';
 import { ICreateOrderUseCase } from '../interfaces/order/create-order.use-case.interface';
 import { IGetOrderUseCase } from '../interfaces/order/get-order.use-case.interface';
+import { IPaymentOrderUseCase } from '../interfaces/order/payment-order.use-case.interface';
+import { IUpdateOrderPaymentUseCase } from '../interfaces/order/update-order-payment.use-case.interface';
 import { IUpdateOrderStatusUseCase } from '../interfaces/order/update-order-status.use-case.interface';
 
 export class OrderController {
@@ -10,7 +12,8 @@ export class OrderController {
 		private readonly createOrderUseCase: ICreateOrderUseCase,
 		private readonly getOrderUseCase: IGetOrderUseCase,
 		private readonly updateOrderStatusUseCase: IUpdateOrderStatusUseCase,
-		private readonly updateOrderPaymentUseCase: IUpdateOrderPaymentUseCase
+		private readonly updateOrderPaymentUseCase: IUpdateOrderPaymentUseCase,
+		private readonly paymentOrderUseCase: IPaymentOrderUseCase
 	) {}
 
 	public async listProcessingOrders(): Promise<Order[]> {
@@ -25,7 +28,7 @@ export class OrderController {
 		return this.getOrderUseCase.findById(id);
 	}
 
-	public async create(body: CreateOrderBodyDto): Promise<Order> {
+	public async create(body: CreateOrderDto): Promise<CreateOrderResponse> {
 		return this.createOrderUseCase.create(body);
 	}
 
@@ -45,16 +48,12 @@ export class OrderController {
 		return this.updateOrderStatusUseCase.updateStatusReceived(id);
 	}
 
-	public async payment(webhookBody: any): Promise<void> {
+	public async payment(webhookBody): Promise<void> {
 		const { data } = webhookBody;
 		const { id } = data;
-
-		const paymentData = await mercadopago.payment.get(id);
-
-		const { metadata, status } = paymentData.body
-		const { order_id } = metadata;
+		const paymentData = await this.paymentOrderUseCase.getPayment(id);
+		const { order_id, status } = paymentData;
 		if (status === 'approved') await this.updateOrderPaymentUseCase.updateOrderPaymentStatusApproved(+order_id);
-
-		if (status === 'rejected') await this.updateOrderPaymentUseCase.updateOrderPaymentStatusRefused(order_id);
+		if (status === 'rejected') await this.updateOrderPaymentUseCase.updateOrderPaymentStatusRefused(+order_id);
 	}
 }

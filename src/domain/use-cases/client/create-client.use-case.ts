@@ -1,4 +1,4 @@
-import CreateClientDto from 'src/framework/modules/client/dtos/create-client.dto';
+import CreateClientDto from '../../dtos/create-client.dto';
 import { Client } from '../../entities/client.entity';
 import { IClientGateway } from '../../interfaces/client/client.gateway.interface';
 import { ICreateClientUseCase } from '../../interfaces/client/create-client.use-case.interface';

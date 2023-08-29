@@ -10,28 +10,22 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-
-import { IGetClientUseCase } from '../../../../domain/interfaces/client/get-client.use-case.interface';
-
-import CreateClientDto from '../dtos/create-client.dto';
-
-import { ICreateClientUseCase } from 'src/core/applications/interfaces/create-client.use-case.interface';
-import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '../../../../domain/symbols/client.symbols';
+import { ClientController } from '../../../domain/controllers/client.controller';
+import { CLIENT_CONTROLLER } from '../../../domain/symbols/client.symbols';
+import CreateClientDto from './dtos/create-client.dto';
 
 @Controller('client')
 @ApiTags('Client')
-export class ClientController {
+export class ClientApi {
 	constructor(
-		@Inject(GET_CLIENT_USE_CASE)
-		private readonly getClientService: IGetClientUseCase,
-		@Inject(CREATE_CLIENT_USE_CASE)
-		private readonly createClientService: ICreateClientUseCase
+		@Inject(CLIENT_CONTROLLER)
+		private readonly clientController: ClientController
 	) {}
 
 	@Get()
 	public async findAllClient(@Res() res: Response): Promise<void> {
 		try {
-			const client = await this.getClientService.findAllClient();
+			const client = await this.clientController.findAllClient();
 			if (!client) {
 				res.status(404).send('Client not found');
 			} else {
@@ -48,7 +42,7 @@ export class ClientController {
 		@Param('document', ParseIntPipe) document: string
 	): Promise<void> {
 		try {
-			const client = await this.getClientService.findByDocument(document);
+			const client = await this.clientController.findByDocument(document);
 			if (!client) {
 				res.status(404).send('Client not found');
 			} else {
@@ -65,7 +59,7 @@ export class ClientController {
 		@Body() createClientDTO: CreateClientDto
 	) {
 		try {
-			const client = await this.createClientService.createClient(createClientDTO);
+			const client = await this.clientController.createClient(createClientDTO);
 			if (!client) {
 				res.status(404).send('Client not created');
 			} else {

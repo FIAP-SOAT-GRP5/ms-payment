@@ -1,4 +1,4 @@
-import CreateClientDto from 'src/framework/modules/client/dtos/create-client.dto';
+import CreateClientDto from '../../dtos/create-client.dto';
 import { Client } from '../../entities/client.entity';
 
 export interface IClientGateway {

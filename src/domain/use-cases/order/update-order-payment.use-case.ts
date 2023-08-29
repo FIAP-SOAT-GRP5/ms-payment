@@ -1,13 +1,13 @@
 import * as mercadopago from 'mercadopago';
-import { Order } from 'src/domain/entities/order.entity';
-import { InvalidOrderStatusError } from 'src/domain/errors/invalid-order-status.error';
-import { OrderNotFoundError } from 'src/domain/errors/order-not-found.error';
-import { OrderStatus } from 'src/domain/value-objects/order-status';
-import { PaymentStatus } from 'src/domain/value-objects/payment-status';
-import PaymentStatusDto from 'src/framework/modules/checkout/dtos/payment-status.dto';
+import PaymentStatusDto from '../../dtos/payment-status.dto';
+import { Order } from '../../entities/order.entity';
+import { InvalidOrderStatusError } from '../../errors/invalid-order-status.error';
+import { OrderNotFoundError } from '../../errors/order-not-found.error';
 import { INotifyOrderGateway } from '../../interfaces/order/notify-order.gateway.interface';
 import { IOrderGateway } from '../../interfaces/order/order.gateway.interface';
 import { IUpdateOrderPaymentUseCase } from '../../interfaces/order/update-order-payment.use-case.interface';
+import { OrderStatus } from '../../value-objects/order-status';
+import { PaymentStatus } from '../../value-objects/payment-status';
 
 export class UpdateOrderPaymentUseCase
 	implements IUpdateOrderPaymentUseCase {
@@ -47,6 +47,7 @@ export class UpdateOrderPaymentUseCase
 	async updateOrderPaymentStatusProcessing(id: number): Promise<Order> {
 		await this.validateOrder(id);
 		this.orderGateway.updateStatusAndPaymentStatus(id, PaymentStatus.PROCESSING);
+		this.notifyOrderGateway.emitOrderIsProcessing(id);
 		return this.orderGateway.findById(id);
 	}
 
