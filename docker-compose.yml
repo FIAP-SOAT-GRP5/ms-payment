@@ -32,25 +32,25 @@ services:
    - DB_DATABASE=$DB_DATABASE
   command: npm start
   ports:
-   - '8080:3000'
+   - '8083:3000'
 
   volumes:
    - .:/app
   depends_on:
    - mysql_db
 
- phpmyadmin:
-  image: phpmyadmin/phpmyadmin
-  container_name: phpmyadmin
-  links:
-   - mysql_db
-  environment:
-   - PMA_HOST=mysql_db
-   - PMA_PORT=3306
-   - PMA_ARBITRARY=1
-  restart: always
-  ports:
-   - 8081:80
+#  phpmyadmin:
+#   image: phpmyadmin/phpmyadmin
+#   container_name: phpmyadmin
+#   links:
+#    - mysql_db
+#   environment:
+#    - PMA_HOST=mysql_db
+#    - PMA_PORT=3306
+#    - PMA_ARBITRARY=1
+#   restart: always
+#   ports:
+#    - 8081:80
 
 volumes:
  mysql_db:

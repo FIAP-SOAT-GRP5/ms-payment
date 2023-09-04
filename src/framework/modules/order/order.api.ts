@@ -19,6 +19,7 @@ import {
 	ORDER_CONTROLLER
 } from '../../../domain/symbols/order.symbols';
 import { CreateOrderBodyDto } from './dtos/create-order.dto';
+import { PaymentWebhookDto } from './dtos/payment-webhook.dto';
 
 @Controller('order')
 @ApiTags('Order')
@@ -169,7 +170,7 @@ export class OrderApi {
 	@Post('status/payment')
 	public async payment(
 		@Res() res: Response,
-		@Body() webhookBody: any
+		@Body() webhookBody: PaymentWebhookDto
 	) {
 		try {
 			await this.orderController.payment(webhookBody);
