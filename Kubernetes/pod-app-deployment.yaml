@@ -1,0 +1,40 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: pod-app-deployment
+spec:
+  replicas: 1  # Número de réplicas do aplicativo
+  selector:
+    matchLabels:
+      app: pod-app
+  template:
+    metadata:
+      labels:
+        app: pod-app
+    spec:
+      containers:
+        - name: pod-app
+          image: ldrssantana/fiapsoatv3:latest  # Imagem do DockerHub
+          ports:
+            - containerPort: 3000  # Porta em que o seu aplicativo está ouvindo
+          env:
+            - name: DB_TYPE
+              value: "mysql"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USERNAME
+              value: "admin"
+            - name: DB_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-pass
+                  key: password
+            - name: DB_DATABASE
+              value: "DB_LANCHONETE"
+            - name: MYSQL_ROOT_PASSWORD
+              value: $(DB_PASSWORD)
+            - name: DB_HOST
+              value: "svc-mysql"
+            - name: MP_ACCESS_TOKEN
+              value: "APP_USR-8458506365923680-081921-c8e5fcbb4be357ce24cac8bb33a0b49a-1455021943"
+
