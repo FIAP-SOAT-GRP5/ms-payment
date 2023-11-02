@@ -13,8 +13,8 @@ jobs:
     name: "ECR"
     runs-on: ubuntu-latest
     environment: production
-    if: github.event.pull_request.merged
-
+    permissions: write-all
+    
     steps:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
