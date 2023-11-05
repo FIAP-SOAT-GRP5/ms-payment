@@ -40,6 +40,7 @@ jobs:
           envkey_DB_PASSWORD: ${{ secrets.RDS_PASSWORD }}
           envkey_DB_DATABASE: ${{ vars.RDS_DATABASE }}
           envkey_MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
+          envkey_JWT_KEY: ${{ secrets.JWT_SECRET }}
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
