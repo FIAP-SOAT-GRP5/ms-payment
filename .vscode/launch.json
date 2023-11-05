@@ -7,7 +7,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Debug Launch API",
+			"name": "Debug API",
 			"cwd": "${workspaceFolder}",
 			"runtimeExecutable": "npm",
 			"runtimeArgs": [

@@ -15,8 +15,4 @@ export class CreateOrderBodyDto {
 	@ApiProperty({ type: ItemDto, isArray: true, nullable: false })
 	@IsArray()
 	itemsIds: ItemDto[];
-
-	@ApiProperty()
-	@ToInt()
-	clientId: number;
 }
