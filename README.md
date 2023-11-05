@@ -256,7 +256,4 @@ Para consultar os pedidos em andamento e seus respectivos status, faça uma requ
 
 Essas rotas permitem que você cadastre produtos, clientes e pedidos, além de consultar os pedidos e seus respectivos status.
 
-
-
-
-*teste*
+teste
