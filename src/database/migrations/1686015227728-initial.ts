@@ -69,7 +69,7 @@ export class Initial1686015227728 implements MigrationInterface {
 						referencedTableName: 'category',
 						referencedColumnNames: ['id'],
 						onUpdate: 'CASCADE',
-						onDelete: 'NO ACTION',
+						onDelete: 'CASCADE',
 					},
 				],
 			})
@@ -106,7 +106,6 @@ export class Initial1686015227728 implements MigrationInterface {
 			{
 				document: '12345678909',
 				name: 'Anonymous User',
-				email: 'user@email.com',
 			},
 		]);
 
@@ -120,7 +119,27 @@ export class Initial1686015227728 implements MigrationInterface {
 						type: 'int',
 						isNullable: false,
 						unsigned: true,
-					},
+					}, {
+						name: 'status',
+						type: 'varchar',
+						isNullable: false,
+					}, {
+						name: 'status_payment',
+						type: 'varchar',
+						isNullable: false,
+					}, {
+						name: 'finished_at',
+						type: 'timestamp',
+						isNullable: true,
+					}, {
+						name: 'created_at',
+						type: 'timestamp',
+						default: 'now()',
+					}, {
+						name: 'updated_at',
+						type: 'timestamp',
+						default: 'now()',
+					}
 				],
 				foreignKeys: [
 					{
@@ -128,7 +147,7 @@ export class Initial1686015227728 implements MigrationInterface {
 						referencedTableName: 'client',
 						referencedColumnNames: ['id'],
 						onUpdate: 'CASCADE',
-						onDelete: 'NO ACTION',
+						onDelete: 'CASCADE',
 					},
 				],
 			})
@@ -168,14 +187,14 @@ export class Initial1686015227728 implements MigrationInterface {
 						referencedTableName: 'order',
 						referencedColumnNames: ['id'],
 						onUpdate: 'CASCADE',
-						onDelete: 'NO ACTION',
+						onDelete: 'CASCADE',
 					},
 					{
 						columnNames: ['item_id'],
 						referencedTableName: 'item',
 						referencedColumnNames: ['id'],
 						onUpdate: 'CASCADE',
-						onDelete: 'NO ACTION',
+						onDelete: 'CASCADE',
 					},
 				],
 			})

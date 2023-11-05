@@ -18,6 +18,9 @@ import { OrderWithoutItemsError } from '../../../domain/errors/order-without-ite
 import {
 	ORDER_CONTROLLER
 } from '../../../domain/symbols/order.symbols';
+import { AuthJwt } from '../../decorators/auth-jwt.decorator';
+import { ReqCurrentUser } from '../../decorators/current-user.decorator';
+import { CurrentUser } from '../../model/current-user.model';
 import { CreateOrderBodyDto } from './dtos/create-order.dto';
 import { PaymentWebhookDto } from './dtos/payment-webhook.dto';
 
@@ -75,12 +78,17 @@ export class OrderApi {
 	}
 
 	@Post()
+	@AuthJwt()
 	public async create(
+		@ReqCurrentUser() currentUser: CurrentUser,
 		@Res() res: Response,
 		@Body() body: CreateOrderBodyDto
 	): Promise<void> {
 		try {
-			const order = await this.orderController.create(body);
+			const order = await this.orderController.create({
+				...body,
+				clientId: +currentUser.id,
+			});
 			res.status(201).send({ order });
 		} catch (error) {
 			if (error instanceof OrderWithoutItemsError) {
