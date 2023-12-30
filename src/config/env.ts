@@ -17,7 +17,6 @@ const envSchema = z.object({
 	DB_PASSWORD: z.string(),
 	DB_DATABASE: z.string(),
 
-	MP_ACCESS_TOKEN: z.string(),
 	JWT_KEY: z.string(),
 });
 
@@ -33,7 +32,6 @@ const envTestSchema = z.object({
 	DB_PASSWORD: z.string().optional(),
 	DB_DATABASE: z.string().optional(),
 
-	MP_ACCESS_TOKEN: z.string().optional(),
 	JWT_KEY: z.string().optional(),
 });
 

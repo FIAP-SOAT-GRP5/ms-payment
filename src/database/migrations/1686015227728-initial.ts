@@ -77,40 +77,6 @@ export class Initial1686015227728 implements MigrationInterface {
 
 		await queryRunner.createTable(
 			new Table({
-				name: 'client',
-				columns: [
-					getIntId(),
-					{
-						name: 'document',
-						type: 'varchar',
-						length: '11',
-						isNullable: true,
-					},
-					{
-						name: 'name',
-						type: 'varchar',
-						length: '45',
-						isNullable: true,
-					},
-					{
-						name: 'email',
-						type: 'varchar',
-						length: '100',
-						isNullable: true,
-					},
-				],
-			})
-		);
-
-		await queryRunner.manager.insert('client', [
-			{
-				document: '12345678909',
-				name: 'Anonymous User',
-			},
-		]);
-
-		await queryRunner.createTable(
-			new Table({
 				name: 'order',
 				columns: [
 					getIntId(),
@@ -140,15 +106,6 @@ export class Initial1686015227728 implements MigrationInterface {
 						type: 'timestamp',
 						default: 'now()',
 					}
-				],
-				foreignKeys: [
-					{
-						columnNames: ['client_id'],
-						referencedTableName: 'client',
-						referencedColumnNames: ['id'],
-						onUpdate: 'CASCADE',
-						onDelete: 'CASCADE',
-					},
 				],
 			})
 		);
@@ -204,7 +161,6 @@ export class Initial1686015227728 implements MigrationInterface {
 	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.dropTable('order_has_item');
 		await queryRunner.dropTable('order');
-		await queryRunner.dropTable('client');
 		await queryRunner.dropTable('item');
 		await queryRunner.dropTable('category');
 	}

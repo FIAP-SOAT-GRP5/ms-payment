@@ -1,5 +1,5 @@
-import { ItemToCreateDto } from '../../dtos/item-to-create.dto';
-import { ItemToUpdateDto } from '../../dtos/item-to-update.dto';
+import { CreateItemDto } from '../../dtos/create-item.dto';
+import { UpdateItemDto } from '../../dtos/update-item.dto';
 import { Item } from '../../entities/item.entity';
 import { IItemRepository } from '../../interfaces/Item/item-repository.interface';
 import { IItemGateway } from '../../interfaces/Item/item.gateway.interface';
@@ -10,11 +10,11 @@ export class ItemGateway implements IItemGateway {
 		private readonly itemRepository: IItemRepository
 	) {}
 
-	createItem(itemToCreate: ItemToCreateDto) {
+	createItem(itemToCreate: CreateItemDto) {
 		return this.itemRepository.save(itemToCreate);
 	}
 
-	updateItem(id: number, itemToUpdate: ItemToUpdateDto) {
+	updateItem(id: number, itemToUpdate: UpdateItemDto) {
 		return this.itemRepository.save({
 			id,
 			...itemToUpdate,

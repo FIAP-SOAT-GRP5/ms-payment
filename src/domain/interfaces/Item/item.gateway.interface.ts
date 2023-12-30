@@ -1,5 +1,5 @@
-import { ItemToCreateDto } from '../../dtos/item-to-create.dto';
-import { ItemToUpdateDto } from '../../dtos/item-to-update.dto';
+import { CreateItemDto } from '../../dtos/create-item.dto';
+import { UpdateItemDto } from '../../dtos/update-item.dto';
 import { Item } from '../../entities/item.entity';
 
 export interface IItemGateway {
@@ -11,6 +11,6 @@ export interface IItemGateway {
 	getItemByDessert(): Promise<Item[]>;
 	getItemByFollowUp(): Promise<Item[]>;
 
-	createItem(item: ItemToCreateDto): Promise<Item>;
-	updateItem(idItem: number, item: ItemToUpdateDto): Promise<Item>;
+	createItem(item: CreateItemDto): Promise<Item>;
+	updateItem(idItem: number, item: UpdateItemDto): Promise<Item>;
 }

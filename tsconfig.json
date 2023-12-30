@@ -11,10 +11,14 @@
 		"outDir": "./dist",
 		"baseUrl": "./",
 		"paths": {
-			"src/*": [
-				"./src/*"
+			"@/*": [
+				"src/*"
 			]
 		},
+		"types": [
+			"vitest/globals",
+			"node"
+		],
 		"incremental": true,
 		"skipLibCheck": true,
 		"strictNullChecks": false,

@@ -10,7 +10,4 @@ export class GetOrderUseCase implements IGetOrderUseCase {
 	listAllOrders(): Promise<Order[]> {
 		return this.orderGateway.listAllOrders();
 	}
-	listProcessingOrders(): Promise<Order[]> {
-		return this.orderGateway.listProcessingOrders();
-	}
 }
