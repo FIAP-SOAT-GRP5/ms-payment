@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Item } from '../../../domain/entities/item.entity';
-import { IItemRepository } from '../../../domain/interfaces/Item/item-repository.interface';
-import { EntityPartial, FindOptionsWhereValue } from '../../../domain/utils/repository';
+import { IItemRepository } from '../../../domain/application/interfaces/Item/item-repository.interface';
+import { EntityPartial, FindOptionsWhereValue } from '../../../domain/application/utils/repository';
+import { Item } from '../../../domain/enterprise/entities/item.entity';
 import { ItemEntity } from '../../entities/item.entity';
 
 @Injectable()

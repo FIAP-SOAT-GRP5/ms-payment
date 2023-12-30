@@ -1,6 +1,6 @@
-import { CreateItemDto } from '../../dtos/create-item.dto';
-import { UpdateItemDto } from '../../dtos/update-item.dto';
-import { Item } from '../../entities/item.entity';
+import { CreateItemDto } from '../../../enterprise/dtos/create-item.dto';
+import { UpdateItemDto } from '../../../enterprise/dtos/update-item.dto';
+import { Item } from '../../../enterprise/entities/item.entity';
 
 export interface IItemGateway {
 	findById(id: number): Promise<Item>;

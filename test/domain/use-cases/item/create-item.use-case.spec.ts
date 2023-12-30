@@ -1,4 +1,4 @@
-import { CreateItemDto } from "../../../../src/domain/dtos/create-item.dto";
+import { CreateItemDto } from "../../../../src/domain/enterprise/dtos/create-item.dto";
 import { CreateItemUseCase } from "../../../../src/domain/use-cases/item/create-item.use-case";
 import { makeDrinkCategory } from "../../../factories/makeCategory";
 import { InMemoryItemRepository } from "../../../repositories/in-memory-item.repository";

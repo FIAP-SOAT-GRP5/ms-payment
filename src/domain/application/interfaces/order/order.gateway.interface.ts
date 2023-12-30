@@ -1,5 +1,5 @@
-import { OrderToCreateDto } from '../../dtos/order-to-create.dto';
-import { Order } from '../../entities/order.entity';
+import { OrderToCreateDto } from '../../../enterprise/dtos/order-to-create.dto';
+import { Order } from '../../../enterprise/entities/order.entity';
 
 export interface IOrderGateway {
 	findById(id: number): Promise<Order>;

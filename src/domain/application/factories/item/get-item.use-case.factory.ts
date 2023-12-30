@@ -1,5 +1,5 @@
-import { IGetItemUseCase } from 'src/domain/interfaces/Item/get-item.use-case.interface';
-import { IItemGateway } from 'src/domain/interfaces/Item/item.gateway.interface';
+import { IGetItemUseCase } from '@/domain/application/interfaces/Item/get-item.use-case.interface';
+import { IItemGateway } from '@/domain/application/interfaces/Item/item.gateway.interface';
 import { GetItemUseCase } from '../../use-cases/item/get-item.use-case';
 
 export const buildGetItemUseCase = (

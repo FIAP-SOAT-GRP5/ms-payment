@@ -1,9 +1,9 @@
-import { CreateItemDto } from '../../dtos/create-item.dto';
-import { UpdateItemDto } from '../../dtos/update-item.dto';
-import { Item } from '../../entities/item.entity';
+import { CreateItemDto } from '../../../enterprise/dtos/create-item.dto';
+import { UpdateItemDto } from '../../../enterprise/dtos/update-item.dto';
+import { Item } from '../../../enterprise/entities/item.entity';
+import { TypeItem } from '../../../enterprise/value-objects/type-item';
 import { IItemRepository } from '../../interfaces/Item/item-repository.interface';
 import { IItemGateway } from '../../interfaces/Item/item.gateway.interface';
-import { TypeItem } from '../../value-objects/type-item';
 
 export class ItemGateway implements IItemGateway {
 	constructor(

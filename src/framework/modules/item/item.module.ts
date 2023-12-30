@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemEntity } from 'src/framework/entities/item.entity';
-import { buildCreateItemUseCase } from '../../../domain/factories/item/create-item.use-case.factory';
-import { buildGetItemUseCase } from '../../../domain/factories/item/get-item.use-case.factory';
-import { buildItemController } from '../../../domain/factories/item/item.controller.factory';
-import { buildItemGateway } from '../../../domain/factories/item/item.gateway.factory';
-import { buildUpdateItemUseCase } from '../../../domain/factories/item/update-item.use-case.factory';
-import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, ITEM_CONTROLLER, ITEM_GATEWAY, UPDATE_ITEM_USE_CASE } from '../../../domain/symbols/item.symbols';
+import { buildCreateItemUseCase } from '../../../domain/application/factories/item/create-item.use-case.factory';
+import { buildGetItemUseCase } from '../../../domain/application/factories/item/get-item.use-case.factory';
+import { buildItemController } from '../../../domain/application/factories/item/item.controller.factory';
+import { buildItemGateway } from '../../../domain/application/factories/item/item.gateway.factory';
+import { buildUpdateItemUseCase } from '../../../domain/application/factories/item/update-item.use-case.factory';
+import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, ITEM_CONTROLLER, ITEM_GATEWAY, UPDATE_ITEM_USE_CASE } from '../../../domain/application/symbols/item.symbols';
 import { ItemApi } from './item.api';
 import { ItemRepository } from './item.repository';
 

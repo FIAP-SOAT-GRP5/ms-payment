@@ -1,5 +1,5 @@
-import { Item } from "../../src/domain/entities/item.entity";
-import { IItemGateway } from "../../src/domain/interfaces/Item/item.gateway.interface";
+import { IItemGateway } from "../../src/domain/application/interfaces/Item/item.gateway.interface";
+import { Item } from "../../src/domain/enterprise/entities/item.entity";
 
 export class InMemoryItemRepository implements IItemGateway {
 	items: Item[] = [];

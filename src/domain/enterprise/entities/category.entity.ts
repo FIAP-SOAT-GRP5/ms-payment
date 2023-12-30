@@ -1,4 +1,4 @@
-import { IEntity } from "../interfaces/entity.interface";
+import { IEntity } from "../../application/interfaces/entity.interface";
 
 export class Category implements IEntity {
 	id: number;

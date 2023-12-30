@@ -7,8 +7,8 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm';
-import { IEntity } from '../../domain/interfaces/entity.interface';
-import { OrderStatus } from '../../domain/value-objects/order-status';
+import { IEntity } from '../../domain/application/interfaces/entity.interface';
+import { OrderStatus } from '../../domain/enterprise/value-objects/order-status';
 import { OrderItemEntity } from './order-item.entity';
 
 @Entity('order')

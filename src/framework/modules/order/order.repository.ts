@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Order } from '../../../domain/entities/order.entity';
-import { IOrderRepository } from '../../../domain/interfaces/order/order-repository.interface';
-import { EntityPartial, FindOptionsWhereValue } from '../../../domain/utils/repository';
-import { OrderStatus } from '../../../domain/value-objects/order-status';
+import { IOrderRepository } from '../../../domain/application/interfaces/order/order-repository.interface';
+import { EntityPartial, FindOptionsWhereValue } from '../../../domain/application/utils/repository';
+import { Order } from '../../../domain/enterprise/entities/order.entity';
+import { OrderStatus } from '../../../domain/enterprise/value-objects/order-status';
 import { OrderEntity } from '../../entities/order.entity';
 
 @Injectable()

@@ -10,11 +10,11 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { OrderController } from '../../../domain/controllers/order.controller';
-import { OrderWithoutItemsError } from '../../../domain/errors/order-without-items.error';
+import { OrderWithoutItemsError } from '../../../core/errors/order-without-items.error';
 import {
 	ORDER_CONTROLLER
-} from '../../../domain/symbols/order.symbols';
+} from '../../../domain/application/symbols/order.symbols';
+import { OrderController } from '../../../domain/controllers/order.controller';
 import { AuthJwt } from '../../decorators/auth-jwt.decorator';
 import { ReqCurrentUser } from '../../decorators/current-user.decorator';
 import { CurrentUser } from '../../model/current-user.model';

@@ -1,5 +1,5 @@
-import { CreateOrderDto } from "../../../../src/domain/dtos/create-order.dto";
-import { OrderWithoutItemsError } from "../../../../src/domain/errors/order-without-items.error";
+import { OrderWithoutItemsError } from "../../../../src/core/errors/order-without-items.error";
+import { CreateOrderDto } from "../../../../src/domain/enterprise/dtos/create-order.dto";
 import { GetItemUseCase } from "../../../../src/domain/use-cases/item/get-item.use-case";
 import { CreateOrderUseCase } from "../../../../src/domain/use-cases/order/create-order.use-case";
 import { makeDrinkCategory } from "../../../factories/makeCategory";

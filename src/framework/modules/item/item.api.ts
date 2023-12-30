@@ -12,8 +12,8 @@ import {
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ItemEntity } from 'src/framework/entities/item.entity';
+import { ITEM_CONTROLLER } from '../../../domain/application/symbols/item.symbols';
 import { ItemController } from '../../../domain/controllers/item.controller';
-import { ITEM_CONTROLLER } from '../../../domain/symbols/item.symbols';
 import { CreateItemDto } from './dtos/create-item.dto';
 import { UpdateItemDto } from './dtos/update-item.dto';
 

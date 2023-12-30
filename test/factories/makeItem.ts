@@ -1,4 +1,4 @@
-import { Item } from "../../src/domain/entities/item.entity"
+import { Item } from "../../src/domain/enterprise/entities/item.entity"
 
 export function makeItem() {
 	const item = new Item()

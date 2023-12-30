@@ -1,4 +1,4 @@
-import { Category } from "../../src/domain/entities/category.entity"
+import { Category } from "../../src/domain/enterprise/entities/category.entity"
 
 export function makeDrinkCategory() {
 	const category = new Category()

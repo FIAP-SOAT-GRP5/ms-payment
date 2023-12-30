@@ -1,8 +1,8 @@
-import { OrderToCreateDto } from "../../src/domain/dtos/order-to-create.dto";
-import { Item } from "../../src/domain/entities/item.entity";
-import { OrderItem } from "../../src/domain/entities/order-item.entity";
-import { Order } from "../../src/domain/entities/order.entity";
-import { IOrderGateway } from "../../src/domain/interfaces/Order/order.gateway.interface";
+import { IOrderGateway } from "../../src/domain/application/interfaces/Order/order.gateway.interface";
+import { OrderToCreateDto } from "../../src/domain/enterprise/dtos/order-to-create.dto";
+import { Item } from "../../src/domain/enterprise/entities/item.entity";
+import { OrderItem } from "../../src/domain/enterprise/entities/order-item.entity";
+import { Order } from "../../src/domain/enterprise/entities/order.entity";
 
 export class InMemoryOrderRepository implements IOrderGateway {
 	orders: Order[] = [];

@@ -1,6 +1,6 @@
 
-import { OrderToCreateDto } from '../../dtos/order-to-create.dto';
-import { Order } from '../../entities/order.entity';
+import { OrderToCreateDto } from '../../../enterprise/dtos/order-to-create.dto';
+import { Order } from '../../../enterprise/entities/order.entity';
 import { IOrderRepository } from '../../interfaces/order/order-repository.interface';
 import { IOrderGateway } from '../../interfaces/order/order.gateway.interface';
 

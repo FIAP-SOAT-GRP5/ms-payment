@@ -1,4 +1,4 @@
-import { IEntity } from '../interfaces/entity.interface';
+import { IEntity } from '../../application/interfaces/entity.interface';
 import { Item } from './item.entity';
 import { Order } from './order.entity';
 

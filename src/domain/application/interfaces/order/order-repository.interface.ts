@@ -1,4 +1,4 @@
-import { Order } from "../../entities/order.entity";
+import { Order } from "../../../enterprise/entities/order.entity";
 import { IRepository } from "../repository.interface";
 
 export interface IOrderRepository extends IRepository<Order> {

@@ -1,4 +1,4 @@
-import { UpdateItemDto } from "../../../../src/domain/dtos/update-item.dto";
+import { UpdateItemDto } from "../../../../src/domain/enterprise/dtos/update-item.dto";
 import { UpdateItemUseCase } from "../../../../src/domain/use-cases/item/update-item.use-case";
 import { makeSnackCategory } from "../../../factories/makeCategory";
 import { makeItem } from "../../../factories/makeItem";
