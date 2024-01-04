@@ -1,4 +1,4 @@
-import { GetOrderUseCase } from "../../../../src/domain/use-cases/order/get-order.use-case";
+import { GetOrderUseCase } from "../../../../src/domain/application/use-cases/order/get-order.use-case";
 import { makeOrderToCreate } from "../../../factories/makeOrder";
 import { InMemoryOrderRepository } from "../../../repositories/in-memory-order.repository";
 

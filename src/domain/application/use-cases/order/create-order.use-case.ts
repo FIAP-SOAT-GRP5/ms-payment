@@ -1,10 +1,10 @@
-import { CreateOrderResponse } from '../../dtos/create-order-response.dto';
-import { CreateOrderDto } from '../../dtos/create-order.dto';
-import { OrderWithoutItemsError } from '../../errors/order-without-items.error';
+import { OrderWithoutItemsError } from '../../../../core/errors/order-without-items.error';
+import { CreateOrderDto } from '../../../enterprise/dtos/create-order.dto';
+import { Order } from '../../../enterprise/entities/order.entity';
+import { OrderStatus } from '../../../enterprise/value-objects/order-status';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
 import { ICreateOrderUseCase } from '../../interfaces/order/create-order.use-case.interface';
 import { IOrderGateway } from '../../interfaces/order/order.gateway.interface';
-import { OrderStatus } from '../../value-objects/order-status';
 
 export class CreateOrderUseCase implements ICreateOrderUseCase {
 	constructor(
@@ -12,7 +12,7 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
 		private readonly getItemUseCase: IGetItemUseCase,
 	) {}
 
-	async create(dto: CreateOrderDto): Promise<CreateOrderResponse> {
+	async create(dto: CreateOrderDto): Promise<Order> {
 		const items = await Promise.all(
 			dto.itemsIds.map(async (item) => {
 				const itemEntity = await this.getItemUseCase.findById(item.id);

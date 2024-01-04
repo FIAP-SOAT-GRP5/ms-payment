@@ -11,10 +11,12 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { OrderWithoutItemsError } from '../../../core/errors/order-without-items.error';
+import { ICreateOrderUseCase } from '../../../domain/application/interfaces/order/create-order.use-case.interface';
+import { IGetOrderUseCase } from '../../../domain/application/interfaces/order/get-order.use-case.interface';
 import {
-	ORDER_CONTROLLER
+	CREATE_ORDER_USE_CASE,
+	GET_ORDER_USE_CASE
 } from '../../../domain/application/symbols/order.symbols';
-import { OrderController } from '../../../domain/controllers/order.controller';
 import { AuthJwt } from '../../decorators/auth-jwt.decorator';
 import { ReqCurrentUser } from '../../decorators/current-user.decorator';
 import { CurrentUser } from '../../model/current-user.model';
@@ -22,16 +24,18 @@ import { CreateOrderBodyDto } from './dtos/create-order.dto';
 
 @Controller('order')
 @ApiTags('Order')
-export class OrderApi {
+export class OrderController {
 	constructor(
-		@Inject(ORDER_CONTROLLER)
-		private readonly orderController: OrderController,
+		@Inject(CREATE_ORDER_USE_CASE)
+		private readonly createOrderUseCase: ICreateOrderUseCase,
+		@Inject(GET_ORDER_USE_CASE)
+		private readonly getOrderUseCase: IGetOrderUseCase,
 	) {}
 
 	@Get('list-all-orders')
 	public async listAllOrders(@Res() res: Response): Promise<void> {
 		try {
-			const list = await this.orderController.listAllOrders();
+			const list = await this.getOrderUseCase.listAllOrders();
 			if (!list) {
 				res.status(404).send('Orders not found');
 			} else {
@@ -48,7 +52,7 @@ export class OrderApi {
 		@Param('id', ParseIntPipe) id: number
 	): Promise<void> {
 		try {
-			const order = await this.orderController.findById(id);
+			const order = await this.getOrderUseCase.findById(id);
 			if (!order) {
 				res.status(404).send('Orders not found');
 			} else {
@@ -67,7 +71,7 @@ export class OrderApi {
 		@Body() body: CreateOrderBodyDto
 	): Promise<void> {
 		try {
-			const order = await this.orderController.create({
+			const order = await this.createOrderUseCase.create({
 				...body,
 				clientId: +currentUser.id,
 			});

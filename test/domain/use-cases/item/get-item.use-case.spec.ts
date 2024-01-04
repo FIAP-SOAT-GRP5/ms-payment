@@ -1,4 +1,4 @@
-import { GetItemUseCase } from "../../../../src/domain/use-cases/item/get-item.use-case";
+import { GetItemUseCase } from "../../../../src/domain/application/use-cases/item/get-item.use-case";
 import { makeDessertCategory, makeDrinkCategory, makeFollowUpCategory, makeSnackCategory } from "../../../factories/makeCategory";
 import { makeItem } from "../../../factories/makeItem";
 import { InMemoryItemRepository } from "../../../repositories/in-memory-item.repository";

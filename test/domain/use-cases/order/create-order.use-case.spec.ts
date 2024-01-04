@@ -1,7 +1,7 @@
 import { OrderWithoutItemsError } from "../../../../src/core/errors/order-without-items.error";
+import { GetItemUseCase } from "../../../../src/domain/application/use-cases/item/get-item.use-case";
+import { CreateOrderUseCase } from "../../../../src/domain/application/use-cases/order/create-order.use-case";
 import { CreateOrderDto } from "../../../../src/domain/enterprise/dtos/create-order.dto";
-import { GetItemUseCase } from "../../../../src/domain/use-cases/item/get-item.use-case";
-import { CreateOrderUseCase } from "../../../../src/domain/use-cases/order/create-order.use-case";
 import { makeDrinkCategory } from "../../../factories/makeCategory";
 import { makeItem } from "../../../factories/makeItem";
 import { InMemoryItemRepository } from "../../../repositories/in-memory-item.repository";

@@ -1,5 +1,5 @@
-import { CreateItemDto } from '../../dtos/create-item.dto';
-import { Item } from '../../entities/item.entity';
+import { CreateItemDto } from '../../../enterprise/dtos/create-item.dto';
+import { Item } from '../../../enterprise/entities/item.entity';
 import { ICreateItemUseCase } from '../../interfaces/Item/create-item.use-case.interface';
 import { IItemGateway } from '../../interfaces/Item/item.gateway.interface';
 

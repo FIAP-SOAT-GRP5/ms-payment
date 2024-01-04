@@ -3,19 +3,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { buildCreateOrderUseCase } from '../../../domain/application/factories/order/create-order.use-case.factory';
 import { buildGetOrderUseCase } from '../../../domain/application/factories/order/get-order.use-case.factory';
 import { buildNotifyOrderGateway } from '../../../domain/application/factories/order/notify-order.gateway.factory';
-import { buildOrderController } from '../../../domain/application/factories/order/order.controller.factory';
 import { buildOrderGateway } from '../../../domain/application/factories/order/order.gateway.factory';
 import { GET_ITEM_USE_CASE } from '../../../domain/application/symbols/item.symbols';
 import {
 	CREATE_ORDER_USE_CASE,
 	FAKE_NOTIFY_ORDER_GATEWAY,
 	GET_ORDER_USE_CASE,
-	ORDER_CONTROLLER,
 	ORDER_GATEWAY
 } from '../../../domain/application/symbols/order.symbols';
 import { OrderEntity } from '../../entities/order.entity';
 import { ItemModule } from '../item/item.module';
-import { OrderApi } from './order.api';
+import { OrderController } from './order.controller';
 import { OrderRepository } from './order.repository';
 
 @Module({
@@ -25,11 +23,6 @@ import { OrderRepository } from './order.repository';
 	],
 	providers: [
 		OrderRepository,
-		{
-			provide: ORDER_CONTROLLER,
-			inject: [CREATE_ORDER_USE_CASE, GET_ORDER_USE_CASE],
-			useFactory: buildOrderController,
-		},
 		{
 			provide: ORDER_GATEWAY,
 			inject: [OrderRepository],
@@ -50,6 +43,6 @@ import { OrderRepository } from './order.repository';
 			useFactory: buildGetOrderUseCase,
 		},
 	],
-	controllers: [OrderApi],
+	controllers: [OrderController],
 })
 export class OrderModule {}

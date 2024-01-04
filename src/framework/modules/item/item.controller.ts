@@ -12,23 +12,29 @@ import {
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ItemEntity } from 'src/framework/entities/item.entity';
-import { ITEM_CONTROLLER } from '../../../domain/application/symbols/item.symbols';
-import { ItemController } from '../../../domain/controllers/item.controller';
+import { ICreateItemUseCase } from '../../../domain/application/interfaces/Item/create-item.use-case.interface';
+import { IGetItemUseCase } from '../../../domain/application/interfaces/Item/get-item.use-case.interface';
+import { IUpdateItemUseCase } from '../../../domain/application/interfaces/Item/update-item.use-case.interface';
+import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, UPDATE_ITEM_USE_CASE } from '../../../domain/application/symbols/item.symbols';
 import { CreateItemDto } from './dtos/create-item.dto';
 import { UpdateItemDto } from './dtos/update-item.dto';
 
 @ApiTags('Item')
 @Controller('item')
-export class ItemApi {
+export class ItemController {
 	constructor(
-		@Inject(ITEM_CONTROLLER)
-		private readonly itemController: ItemController,
+		@Inject(GET_ITEM_USE_CASE)
+		private readonly getItemUseCase: IGetItemUseCase,
+		@Inject(CREATE_ITEM_USE_CASE)
+		private readonly createItemUseCase: ICreateItemUseCase,
+		@Inject(UPDATE_ITEM_USE_CASE)
+		private readonly updateItemUseCase: IUpdateItemUseCase,
 	) {}
 
 	@Get('/getItemBySnack')
 	public async getItemBySnack(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.itemController.getItemBySnack();
+			const item = await this.getItemUseCase.getItemBySnack();
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {
@@ -42,7 +48,7 @@ export class ItemApi {
 	@Get('/getItemByFollowUp')
 	public async getItemByFollowUp(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.itemController.getItemByFollowUp();
+			const item = await this.getItemUseCase.getItemByFollowUp();
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {
@@ -56,7 +62,7 @@ export class ItemApi {
 	@Get('/getItemByDrink')
 	public async getItemByDrink(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.itemController.getItemByDrink();
+			const item = await this.getItemUseCase.getItemByDrink();
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {
@@ -70,7 +76,7 @@ export class ItemApi {
 	@Get('/getItemByDessert')
 	public async getItemByDessert(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.itemController.getItemByDessert();
+			const item = await this.getItemUseCase.getItemByDessert();
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {
@@ -87,7 +93,7 @@ export class ItemApi {
 		@Param('id', ParseIntPipe) id: number
 	): Promise<void> {
 		try {
-			const item = await this.itemController.findById(id);
+			const item = await this.getItemUseCase.findById(id);
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {
@@ -105,7 +111,7 @@ export class ItemApi {
 		@Body() item: CreateItemDto
 	): Promise<void> {
 		try {
-			const createItem = await this.itemController.createItem(item);
+			const createItem = await this.createItemUseCase.createItem(item);
 			if (!createItem) {
 				res.status(404).send('Items not found');
 			} else {
@@ -123,7 +129,7 @@ export class ItemApi {
 		@Body() item: UpdateItemDto
 	): Promise<void> {
 		try {
-			const createItem = await this.itemController.updateItem(id, item);
+			const createItem = await this.updateItemUseCase.updateItem(id, item);
 			if (!createItem) {
 				res.status(404).send('Items not found');
 			} else {
@@ -137,7 +143,7 @@ export class ItemApi {
 	@Get()
 	public async findAll(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.itemController.findAll();
+			const item = await this.getItemUseCase.findAll();
 			if (!item) {
 				res.status(404).send('Items not found');
 			} else {

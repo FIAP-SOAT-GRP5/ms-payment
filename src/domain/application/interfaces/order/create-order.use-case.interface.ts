@@ -1,6 +1,6 @@
-import { CreateOrderResponse } from "../../../enterprise/dtos/create-order-response.dto";
 import { CreateOrderDto } from "../../../enterprise/dtos/create-order.dto";
+import { Order } from "../../../enterprise/entities/order.entity";
 
 export interface ICreateOrderUseCase {
-	create(dto: CreateOrderDto): Promise<CreateOrderResponse>;
+	create(dto: CreateOrderDto): Promise<Order>;
 }
