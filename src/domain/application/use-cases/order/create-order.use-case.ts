@@ -4,11 +4,11 @@ import { Order } from '../../../enterprise/entities/order.entity';
 import { OrderStatus } from '../../../enterprise/value-objects/order-status';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
 import { ICreateOrderUseCase } from '../../interfaces/order/create-order.use-case.interface';
-import { IOrderGateway } from '../../interfaces/order/order.gateway.interface';
+import { IOrderRepository } from '../../interfaces/order/order-repository.interface';
 
 export class CreateOrderUseCase implements ICreateOrderUseCase {
 	constructor(
-		private readonly orderGateway: IOrderGateway,
+		private readonly repository: IOrderRepository,
 		private readonly getItemUseCase: IGetItemUseCase,
 	) {}
 
@@ -26,7 +26,7 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
 		);
 		if (items.length === 0) throw new OrderWithoutItemsError();
 
-		const order = await this.orderGateway.create({
+		const order = await this.repository.create({
 			client: {
 				id: dto.clientId
 			},

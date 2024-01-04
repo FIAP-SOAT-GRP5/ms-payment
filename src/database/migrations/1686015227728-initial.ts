@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 import { getIntId } from '../utils/migration';
 
@@ -165,3 +166,5 @@ export class Initial1686015227728 implements MigrationInterface {
 		await queryRunner.dropTable('category');
 	}
 }
+
+/* v8 ignore stop */

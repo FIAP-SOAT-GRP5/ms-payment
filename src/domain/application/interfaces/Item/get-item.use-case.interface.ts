@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Item } from "../../../enterprise/entities/item.entity";
 
 export interface IGetItemUseCase {
@@ -8,3 +9,4 @@ export interface IGetItemUseCase {
 	getItemByDrink(): Promise<Item[]>;
 	getItemByDessert(): Promise<Item[]>;
 }
+/* v8 ignore stop */

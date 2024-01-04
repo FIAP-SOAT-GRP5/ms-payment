@@ -1,4 +1,2 @@
-export const ORDER_GATEWAY = Symbol('ORDER_GATEWAY');
-export const FAKE_NOTIFY_ORDER_GATEWAY = Symbol('FAKE_NOTIFY_ORDER_GATEWAY');
 export const CREATE_ORDER_USE_CASE = Symbol('CREATE_ORDER_USE_CASE');
 export const GET_ORDER_USE_CASE = Symbol('GET_ORDER_USE_CASE');

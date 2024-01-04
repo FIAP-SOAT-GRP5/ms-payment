@@ -1,14 +1,14 @@
-import { IItemGateway } from "../../src/domain/application/interfaces/Item/item.gateway.interface";
+import { IItemRepository } from "../../src/domain/application/interfaces/Item/item-repository.interface";
 import { Item } from "../../src/domain/enterprise/entities/item.entity";
 
-export class InMemoryItemRepository implements IItemGateway {
+export class InMemoryItemRepository implements IItemRepository {
 	items: Item[] = [];
 
 	private generateId(): number {
 		const findBiggestId = () => {
 			let biggestId = 0;
 			for (const item of this.items) {
-				if (item.id > biggestId) {
+				if (item.getId() > biggestId) {
 					biggestId = item.id;
 				}
 			}

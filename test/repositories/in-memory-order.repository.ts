@@ -1,17 +1,17 @@
-import { IOrderGateway } from "../../src/domain/application/interfaces/Order/order.gateway.interface";
+import { IOrderRepository } from "../../src/domain/application/interfaces/order/order-repository.interface";
 import { OrderToCreateDto } from "../../src/domain/enterprise/dtos/order-to-create.dto";
 import { Item } from "../../src/domain/enterprise/entities/item.entity";
 import { OrderItem } from "../../src/domain/enterprise/entities/order-item.entity";
 import { Order } from "../../src/domain/enterprise/entities/order.entity";
 
-export class InMemoryOrderRepository implements IOrderGateway {
+export class InMemoryOrderRepository implements IOrderRepository {
 	orders: Order[] = [];
 
 	private generateId(): number {
 		const findBiggestId = () => {
 			let biggestId = 0;
 			for (const order of this.orders) {
-				if (order.id > biggestId) {
+				if (order.getId() > biggestId) {
 					biggestId = order.id;
 				}
 			}

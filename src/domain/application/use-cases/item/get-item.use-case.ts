@@ -1,30 +1,30 @@
 import { Item } from '../../../enterprise/entities/item.entity';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
-import { IItemGateway } from '../../interfaces/Item/item.gateway.interface';
+import { IItemRepository } from '../../interfaces/Item/item-repository.interface';
 
 export class GetItemUseCase implements IGetItemUseCase {
-	constructor(private readonly itemGateway: IItemGateway) {}
+	constructor(private readonly repository: IItemRepository) {}
 	getItemBySnack(): Promise<Item[]> {
-		return this.itemGateway.getItemBySnack();
+		return this.repository.getItemBySnack();
 	}
 
 	getItemByFollowUp(): Promise<Item[]> {
-		return this.itemGateway.getItemByFollowUp();
+		return this.repository.getItemByFollowUp();
 	}
 
 	getItemByDrink(): Promise<Item[]> {
-		return this.itemGateway.getItemByDrink();
+		return this.repository.getItemByDrink();
 	}
 
 	getItemByDessert(): Promise<Item[]> {
-		return this.itemGateway.getItemByDessert();
+		return this.repository.getItemByDessert();
 	}
 
 	findById(id: number): Promise<Item> {
-		return this.itemGateway.findById(id);
+		return this.repository.findById(id);
 	}
 
 	findAll(): Promise<Item[]> {
-		return this.itemGateway.findAll();
+		return this.repository.findAll();
 	}
 }
