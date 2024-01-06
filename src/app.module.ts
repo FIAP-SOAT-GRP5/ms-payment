@@ -1,4 +1,3 @@
-import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getDbConfig } from './config/database';
@@ -14,7 +13,6 @@ import { OrderModule } from './framework/modules/order/order.module';
 		OrderModule,
 		ItemModule,
 		AuthModule,
-		HttpModule,
 	],
 })
 export class AppModule {}
