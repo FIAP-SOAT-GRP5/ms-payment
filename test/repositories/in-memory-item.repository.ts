@@ -49,6 +49,7 @@ export class InMemoryItemRepository implements IItemRepository {
 
 	async updateItem(idItem: number, newItem: Item): Promise<Item> {
 		const itemIndex = this.items.findIndex((item) => item.id === idItem);
+		if (itemIndex === -1) return undefined;
 		this.items[itemIndex] = newItem;
 		return newItem;
 	}

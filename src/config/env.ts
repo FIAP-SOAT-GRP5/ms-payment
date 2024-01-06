@@ -32,7 +32,7 @@ const envTestSchema = z.object({
 	DB_PASSWORD: z.string().optional(),
 	DB_DATABASE: z.string().optional(),
 
-	JWT_KEY: z.string().optional(),
+	JWT_KEY: z.string().default('test'),
 });
 
 const getEnv = () => {

@@ -36,11 +36,7 @@ export class OrderController {
 	public async listAllOrders(@Res() res: Response): Promise<void> {
 		try {
 			const list = await this.getOrderUseCase.listAllOrders();
-			if (!list) {
-				res.status(404).send('Orders not found');
-			} else {
-				res.status(200).send({ list });
-			}
+			res.status(200).send({ list });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}

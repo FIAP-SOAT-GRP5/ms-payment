@@ -16,7 +16,7 @@
 			]
 		},
 		"types": [
-			"jest",
+			"vitest/globals",
 			"node"
 		],
 		"incremental": true,

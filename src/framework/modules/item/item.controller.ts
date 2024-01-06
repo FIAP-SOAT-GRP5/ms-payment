@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { ItemEntity } from 'src/framework/entities/item.entity';
 import { ICreateItemUseCase } from '../../../domain/application/interfaces/Item/create-item.use-case.interface';
 import { IGetItemUseCase } from '../../../domain/application/interfaces/Item/get-item.use-case.interface';
 import { IUpdateItemUseCase } from '../../../domain/application/interfaces/Item/update-item.use-case.interface';
 import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, UPDATE_ITEM_USE_CASE } from '../../../domain/application/symbols/item.symbols';
+import { ItemEntity } from '../../entities/item.entity';
 import { CreateItemDto } from './dtos/create-item.dto';
 import { UpdateItemDto } from './dtos/update-item.dto';
 
@@ -34,12 +34,8 @@ export class ItemController {
 	@Get('/getItemBySnack')
 	public async getItemBySnack(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.getItemUseCase.getItemBySnack();
-			if (!item) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: item });
-			}
+			const items = await this.getItemUseCase.getItemBySnack();
+			res.status(200).send({ items });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -48,12 +44,8 @@ export class ItemController {
 	@Get('/getItemByFollowUp')
 	public async getItemByFollowUp(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.getItemUseCase.getItemByFollowUp();
-			if (!item) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: item });
-			}
+			const items = await this.getItemUseCase.getItemByFollowUp();
+			res.status(200).send({ items });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -62,12 +54,8 @@ export class ItemController {
 	@Get('/getItemByDrink')
 	public async getItemByDrink(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.getItemUseCase.getItemByDrink();
-			if (!item) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: item });
-			}
+			const items = await this.getItemUseCase.getItemByDrink();
+			res.status(200).send({ items });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -76,12 +64,8 @@ export class ItemController {
 	@Get('/getItemByDessert')
 	public async getItemByDessert(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.getItemUseCase.getItemByDessert();
-			if (!item) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: item });
-			}
+			const items = await this.getItemUseCase.getItemByDessert();
+			res.status(200).send({ items });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -95,9 +79,9 @@ export class ItemController {
 		try {
 			const item = await this.getItemUseCase.findById(id);
 			if (!item) {
-				res.status(404).send('Items not found');
+				res.status(404).send('Item not found');
 			} else {
-				res.status(200).send({ item: item });
+				res.status(200).send({ item });
 			}
 		} catch (error) {
 			res.status(500).send(error.message);
@@ -111,12 +95,8 @@ export class ItemController {
 		@Body() item: CreateItemDto
 	): Promise<void> {
 		try {
-			const createItem = await this.createItemUseCase.createItem(item);
-			if (!createItem) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: createItem });
-			}
+			const createdItem = await this.createItemUseCase.createItem(item);
+			res.status(201).send({ item: createdItem });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
@@ -129,11 +109,11 @@ export class ItemController {
 		@Body() item: UpdateItemDto
 	): Promise<void> {
 		try {
-			const createItem = await this.updateItemUseCase.updateItem(id, item);
-			if (!createItem) {
-				res.status(404).send('Items not found');
+			const updatedItem = await this.updateItemUseCase.updateItem(id, item);
+			if (!updatedItem) {
+				res.status(404).send('Item not found');
 			} else {
-				res.status(200).send({ item: createItem });
+				res.status(200).send({ item: updatedItem });
 			}
 		} catch (error) {
 			res.status(500).send(error.message);
@@ -143,12 +123,8 @@ export class ItemController {
 	@Get()
 	public async findAll(@Res() res: Response): Promise<void> {
 		try {
-			const item = await this.getItemUseCase.findAll();
-			if (!item) {
-				res.status(404).send('Items not found');
-			} else {
-				res.status(200).send({ item: item });
-			}
+			const items = await this.getItemUseCase.findAll();
+			res.status(200).send({ items });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}
