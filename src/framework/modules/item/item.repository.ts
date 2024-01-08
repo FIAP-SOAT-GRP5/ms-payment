@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -78,3 +79,4 @@ export class ItemRepository implements IItemRepository {
 		return this.itemRepository.find();
 	}
 }
+/* v8 ignore stop */

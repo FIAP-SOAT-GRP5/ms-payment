@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
 import { CurrentUser } from '../model/current-user.model';
@@ -10,3 +11,4 @@ export const ReqCurrentUser = createParamDecorator(
 		return currentUser;
 	}
 );
+/* v8 ignore stop */

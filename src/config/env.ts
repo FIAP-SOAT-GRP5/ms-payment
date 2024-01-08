@@ -18,6 +18,8 @@ const envSchema = z.object({
 	DB_DATABASE: z.string(),
 
 	JWT_KEY: z.string(),
+
+	QUEUE_CREATE_ORDER_URL: z.string(),
 });
 
 const envTestSchema = z.object({
@@ -33,6 +35,8 @@ const envTestSchema = z.object({
 	DB_DATABASE: z.string().optional(),
 
 	JWT_KEY: z.string().default('test'),
+
+	QUEUE_CREATE_ORDER_URL: z.string().optional(),
 });
 
 const getEnv = () => {

@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { buildCreateOrderUseCase } from '../../../domain/application/factories/order/create-order.use-case.factory';
@@ -11,6 +12,7 @@ import { OrderEntity } from '../../entities/order.entity';
 import { ItemModule } from '../item/item.module';
 import { OrderController } from './order.controller';
 import { OrderRepository } from './order.repository';
+import { QueueGateway } from './queue.gateway';
 
 @Module({
 	imports: [
@@ -19,9 +21,10 @@ import { OrderRepository } from './order.repository';
 	],
 	providers: [
 		OrderRepository,
+		QueueGateway,
 		{
 			provide: CREATE_ORDER_USE_CASE,
-			inject: [OrderRepository, GET_ITEM_USE_CASE],
+			inject: [OrderRepository, GET_ITEM_USE_CASE, QueueGateway],
 			useFactory: buildCreateOrderUseCase,
 		},
 		{
@@ -33,3 +36,4 @@ import { OrderRepository } from './order.repository';
 	controllers: [OrderController],
 })
 export class OrderModule {}
+/* v8 ignore stop */

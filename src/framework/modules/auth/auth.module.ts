@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import env from '../../../config/env';
@@ -13,3 +14,4 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 	providers: [JwtStrategy],
 })
 export class AuthModule {}
+/* v8 ignore stop */

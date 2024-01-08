@@ -9,6 +9,7 @@ import { buildCreateOrderUseCase } from '../../../src/domain/application/factori
 import { buildGetOrderUseCase } from '../../../src/domain/application/factories/order/get-order.use-case.factory';
 import { ICreateOrderUseCase } from '../../../src/domain/application/interfaces/Order/create-order.use-case.interface';
 import { IGetOrderUseCase } from '../../../src/domain/application/interfaces/Order/get-order.use-case.interface';
+import { IQueueGateway } from '../../../src/domain/application/interfaces/queue/queue.gateway.interface';
 import { GET_ITEM_USE_CASE } from '../../../src/domain/application/symbols/item.symbols';
 import { CREATE_ORDER_USE_CASE, GET_ORDER_USE_CASE } from '../../../src/domain/application/symbols/order.symbols';
 import { AuthModule } from '../../../src/framework/modules/auth/auth.module';
@@ -16,6 +17,7 @@ import { ItemRepository } from '../../../src/framework/modules/item/item.reposit
 import { CreateOrderBodyDto } from '../../../src/framework/modules/order/dtos/create-order.dto';
 import { OrderController } from '../../../src/framework/modules/order/order.controller';
 import { OrderRepository } from '../../../src/framework/modules/order/order.repository';
+import { QueueGateway } from '../../../src/framework/modules/order/queue.gateway';
 import { makeItem } from '../../factories/makeItem';
 import { makeOrderToCreate } from '../../factories/makeOrder';
 import { InMemoryItemRepository } from '../../repositories/in-memory-item.repository';
@@ -25,6 +27,7 @@ import { InMemoryOrderRepository } from '../../repositories/in-memory-order.repo
 const moduleMocker = new ModuleMocker(global);
 
 describe('OrderController', () => {
+	let queueGateway: IQueueGateway;
 	let inMemoryOrderRepository: InMemoryOrderRepository;
 	let inMemoryItemRepository: InMemoryItemRepository;
 	let getOrderUseCase: IGetOrderUseCase;
@@ -32,6 +35,9 @@ describe('OrderController', () => {
 	let app: INestApplication;
 
 	beforeEach(async () => {
+		queueGateway = {
+			send: vi.fn(),
+		}
 		inMemoryOrderRepository = new InMemoryOrderRepository()
 		inMemoryItemRepository = new InMemoryItemRepository()
 		process.env.JWT_KEY = 'test'
@@ -49,6 +55,10 @@ describe('OrderController', () => {
 					useValue: inMemoryOrderRepository,
 				},
 				{
+					provide: QueueGateway,
+					useValue: queueGateway,
+				},
+				{
 					provide: GET_ITEM_USE_CASE,
 					inject: [ItemRepository],
 					useFactory: buildGetItemUseCase,
@@ -60,7 +70,7 @@ describe('OrderController', () => {
 				},
 				{
 					provide: CREATE_ORDER_USE_CASE,
-					inject: [OrderRepository, GET_ITEM_USE_CASE],
+					inject: [OrderRepository, GET_ITEM_USE_CASE, QueueGateway],
 					useFactory: buildCreateOrderUseCase,
 				},
 			]
@@ -169,6 +179,7 @@ describe('OrderController', () => {
 			expect(response.body.order).toBeDefined()
 			expect(response.statusCode).toBe(201)
 			expect(spyCreateOrder).toHaveBeenCalled()
+			expect(queueGateway.send).toHaveBeenCalled()
 		});
 
 		it('should return 500', async () => {

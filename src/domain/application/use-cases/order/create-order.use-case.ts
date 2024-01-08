@@ -5,11 +5,13 @@ import { OrderStatus } from '../../../enterprise/value-objects/order-status';
 import { IGetItemUseCase } from '../../interfaces/Item/get-item.use-case.interface';
 import { ICreateOrderUseCase } from '../../interfaces/order/create-order.use-case.interface';
 import { IOrderRepository } from '../../interfaces/order/order-repository.interface';
+import { IQueueGateway } from '../../interfaces/queue/queue.gateway.interface';
 
 export class CreateOrderUseCase implements ICreateOrderUseCase {
 	constructor(
 		private readonly repository: IOrderRepository,
 		private readonly getItemUseCase: IGetItemUseCase,
+		private readonly queueGateway: IQueueGateway,
 	) {}
 
 	async create(dto: CreateOrderDto): Promise<Order> {
@@ -40,7 +42,7 @@ export class CreateOrderUseCase implements ICreateOrderUseCase {
 				quantity: item.quantity
 			})),
 		});
-		// TODO: Call RabbitMQ
+		await this.queueGateway.send(order);
 		return order;
 	}
 }

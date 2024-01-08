@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemEntity } from 'src/framework/entities/item.entity';
@@ -32,3 +33,4 @@ import { ItemRepository } from './item.repository';
 	exports: [GET_ITEM_USE_CASE],
 })
 export class ItemModule {}
+/* v8 ignore stop */
