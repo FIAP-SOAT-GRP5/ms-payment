@@ -1,10 +1,11 @@
+/* v8 ignore start */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { Order } from '../../../domain/entities/order.entity';
-import { IOrderRepository } from '../../../domain/interfaces/order/order-repository.interface';
-import { EntityPartial, FindOptionsWhereValue } from '../../../domain/utils/repository';
-import { OrderStatus } from '../../../domain/value-objects/order-status';
+import { IOrderRepository } from '../../../domain/application/interfaces/order/order-repository.interface';
+import { OrderToCreateDto } from '../../../domain/enterprise/dtos/order-to-create.dto';
+import { Order } from '../../../domain/enterprise/entities/order.entity';
+import { OrderStatus } from '../../../domain/enterprise/value-objects/order-status';
 import { OrderEntity } from '../../entities/order.entity';
 
 @Injectable()
@@ -14,20 +15,10 @@ export class OrderRepository implements IOrderRepository {
 		private readonly orderRepository: Repository<OrderEntity>
 	) {}
 
-	exists(where?: FindOptionsWhereValue<Order>): Promise<boolean> {
-		return this.orderRepository.exist({ where });
-	}
-
-	find(where?: FindOptionsWhereValue<Order>): Promise<Order[]> {
-		return this.orderRepository.find({
-			where,
+	async create(orderToCreate: OrderToCreateDto): Promise<Order> {
+		return this.orderRepository.save(orderToCreate).then((order) => {
+			return this.findById(order.id);
 		});
-	}
-
-	findOne(where?: FindOptionsWhereValue<Order>): Promise<Order> {
-		return this.orderRepository.findOne({
-			where,
-		})
 	}
 
 	findById(id: number): Promise<Order> {
@@ -44,57 +35,7 @@ export class OrderRepository implements IOrderRepository {
 		});
 	}
 
-	save(data: EntityPartial<Order>): Promise<Order> {
-		return this.orderRepository.save(data);
-	}
-
-	async listProcessingOrders(): Promise<Order[]> {
-		const ready = await this.orderRepository.find({
-			where: {
-				status: In([OrderStatus.READY]),
-			},
-			order: {
-				createdAt: 'ASC',
-			},
-			relations: [
-				'orderItems',
-				'client',
-				'orderItems.item',
-				'orderItems.item.category',
-			],
-		});
-		const processing = await this.orderRepository.find({
-			where: {
-				status: In([OrderStatus.PROCESSING]),
-			},
-			order: {
-				createdAt: 'ASC',
-			},
-			relations: [
-				'orderItems',
-				'client',
-				'orderItems.item',
-				'orderItems.item.category',
-			],
-		});
-		const received = await this.orderRepository.find({
-			where: {
-				status: In([OrderStatus.RECEIVED]),
-			},
-			order: {
-				createdAt: 'ASC',
-			},
-			relations: [
-				'orderItems',
-				'client',
-				'orderItems.item',
-				'orderItems.item.category',
-			],
-		});
-		return ready.concat(processing, received)
-	}
-
-	async listAllOrders(): Promise<Order[]> {
+	listAllOrders(): Promise<Order[]> {
 		return this.orderRepository.find({
 			where: {
 				status: In([
@@ -115,3 +56,4 @@ export class OrderRepository implements IOrderRepository {
 	}
 
 }
+/* v8 ignore stop */

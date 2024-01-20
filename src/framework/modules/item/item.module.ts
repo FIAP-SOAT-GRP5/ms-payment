@@ -1,13 +1,12 @@
+/* v8 ignore start */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItemEntity } from 'src/framework/entities/item.entity';
-import { buildCreateItemUseCase } from '../../../domain/factories/item/create-item.use-case.factory';
-import { buildGetItemUseCase } from '../../../domain/factories/item/get-item.use-case.factory';
-import { buildItemController } from '../../../domain/factories/item/item.controller.factory';
-import { buildItemGateway } from '../../../domain/factories/item/item.gateway.factory';
-import { buildUpdateItemUseCase } from '../../../domain/factories/item/update-item.use-case.factory';
-import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, ITEM_CONTROLLER, ITEM_GATEWAY, UPDATE_ITEM_USE_CASE } from '../../../domain/symbols/item.symbols';
-import { ItemApi } from './item.api';
+import { buildCreateItemUseCase } from '../../../domain/application/factories/item/create-item.use-case.factory';
+import { buildGetItemUseCase } from '../../../domain/application/factories/item/get-item.use-case.factory';
+import { buildUpdateItemUseCase } from '../../../domain/application/factories/item/update-item.use-case.factory';
+import { CREATE_ITEM_USE_CASE, GET_ITEM_USE_CASE, UPDATE_ITEM_USE_CASE } from '../../../domain/application/symbols/item.symbols';
+import { ItemController } from './item.controller';
 import { ItemRepository } from './item.repository';
 
 @Module({
@@ -15,32 +14,23 @@ import { ItemRepository } from './item.repository';
 	providers: [
 		ItemRepository,
 		{
-			provide: ITEM_CONTROLLER,
-			inject: [GET_ITEM_USE_CASE, CREATE_ITEM_USE_CASE, UPDATE_ITEM_USE_CASE],
-			useFactory: buildItemController,
-		},
-		{
-			provide: ITEM_GATEWAY,
-			inject: [ItemRepository],
-			useFactory: buildItemGateway,
-		},
-		{
 			provide: GET_ITEM_USE_CASE,
-			inject: [ITEM_GATEWAY],
+			inject: [ItemRepository],
 			useFactory: buildGetItemUseCase,
 		},
 		{
 			provide: CREATE_ITEM_USE_CASE,
-			inject: [ITEM_GATEWAY],
+			inject: [ItemRepository],
 			useFactory: buildCreateItemUseCase,
 		},
 		{
 			provide: UPDATE_ITEM_USE_CASE,
-			inject: [ITEM_GATEWAY],
+			inject: [ItemRepository],
 			useFactory: buildUpdateItemUseCase,
 		},
 	],
-	controllers: [ItemApi],
+	controllers: [ItemController],
 	exports: [GET_ITEM_USE_CASE],
 })
 export class ItemModule {}
+/* v8 ignore stop */

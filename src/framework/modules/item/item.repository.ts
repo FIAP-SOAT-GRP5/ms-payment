@@ -1,9 +1,12 @@
+/* v8 ignore start */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Item } from '../../../domain/entities/item.entity';
-import { IItemRepository } from '../../../domain/interfaces/Item/item-repository.interface';
-import { EntityPartial, FindOptionsWhereValue } from '../../../domain/utils/repository';
+import { IItemRepository } from '../../../domain/application/interfaces/Item/item-repository.interface';
+import { CreateItemDto } from '../../../domain/enterprise/dtos/create-item.dto';
+import { UpdateItemDto } from '../../../domain/enterprise/dtos/update-item.dto';
+import { Item } from '../../../domain/enterprise/entities/item.entity';
+import { TypeItem } from '../../../domain/enterprise/value-objects/type-item';
 import { ItemEntity } from '../../entities/item.entity';
 
 @Injectable()
@@ -13,20 +16,55 @@ export class ItemRepository implements IItemRepository {
 		private itemRepository: Repository<ItemEntity>
 	) {}
 
-	exists(where?: FindOptionsWhereValue<Item>): Promise<boolean> {
-		return this.itemRepository.exist({ where });
+	createItem(itemToCreate: CreateItemDto) {
+		return this.itemRepository.save(itemToCreate);
 	}
 
-	find(where?: FindOptionsWhereValue<Item>): Promise<Item[]> {
-		return this.itemRepository.find({
-			where,
+	updateItem(id: number, itemToUpdate: UpdateItemDto) {
+		return this.itemRepository.save({
+			id,
+			...itemToUpdate,
 		});
 	}
 
-	findOne(where?: FindOptionsWhereValue<Item>): Promise<Item> {
-		return this.itemRepository.findOne({
-			where,
-		})
+	getItemBySnack(): Promise<Item[]> {
+		return this.itemRepository.find({
+			where: {
+				category: {
+					id: TypeItem.SNACK,
+				},
+			}
+		});
+	}
+
+	getItemByFollowUp(): Promise<Item[]> {
+		return this.itemRepository.find({
+			where: {
+				category: {
+					id: TypeItem.FOLLOW_UP,
+				},
+			}
+		});
+	}
+
+	getItemByDrink(): Promise<Item[]> {
+		return this.itemRepository.find({
+			where: {
+				category: {
+					id: TypeItem.DRINK,
+				},
+			}
+		});
+	}
+
+	getItemByDessert(): Promise<Item[]> {
+		return this.itemRepository.find({
+			where: {
+				category: {
+					id: TypeItem.DESSERT,
+				},
+			}
+		});
 	}
 
 	findById(id: number): Promise<Item> {
@@ -37,7 +75,8 @@ export class ItemRepository implements IItemRepository {
 		});
 	}
 
-	save(data: EntityPartial<Item>): Promise<Item> {
-		return this.itemRepository.save(data);
+	findAll(): Promise<Item[]> {
+		return this.itemRepository.find();
 	}
 }
+/* v8 ignore stop */
