@@ -8,8 +8,8 @@ on:
       - "*"
 
 jobs:
-  test:
-    name: "Teste"
+  build:
+    name: "Build project"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,8 +23,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests with Jest
-        run: npm run test
-
+  lint:
+    name: "Validate lint"
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Validate with ESLint
         run: npm run lint
+
+  test:
+    name: "Validate tests"
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests with Jest
+        run: npm run test
