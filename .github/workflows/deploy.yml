@@ -2,7 +2,9 @@ name: Deploy to ECR
 
 on:
  workflow_run:
-  workflows: Test
+  workflows: ["Execute Tests"]
+  types:
+   - completed
   branches:
     - main
  push:
@@ -11,7 +13,7 @@ on:
 
 jobs:
  deploy:
-  name: 'ECR'
+  name: 'Deploy to ECR'
   runs-on: ubuntu-latest
   environment: production
   permissions: write-all
