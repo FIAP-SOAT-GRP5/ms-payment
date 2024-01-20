@@ -1,6 +1,10 @@
 name: Deploy to ECR
 
 on:
+ workflow_run:
+  workflows: Test
+  branches:
+    - main
  push:
   branches:
    - main
