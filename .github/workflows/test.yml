@@ -100,3 +100,17 @@ jobs:
 
    - name: Run tests with Jest
      run: npm run test
+
+   - name: Analyze with SonarCloud
+     uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
+     env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+     with:
+      # Additional arguments for the sonarcloud scanner
+      args:
+       # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
+       # mandatory
+       -Dsonar.projectKey=FIAP-SOAT-GRP5_ms-order
+       -Dsonar.organization=fiap-soat-grp5
+       -Dsonar.sources=src/
