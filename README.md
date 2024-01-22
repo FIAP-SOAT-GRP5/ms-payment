@@ -2,6 +2,8 @@
 
 Este repositório contém uma API para gerenciar pedidos em um restaurante/lanchonete. A API permite cadastrar produtos, clientes e realizar pedidos, além de consultar os pedidos em andamento e seus respectivos status. A API é documentada usando o Swagger, que fornece uma interface intuitiva para testar e explorar os endpoints.
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=FIAP-SOAT-GRP5_ms-order&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=FIAP-SOAT-GRP5_ms-order)
+
 ## Pré-requisitos
 
 - Node.js
