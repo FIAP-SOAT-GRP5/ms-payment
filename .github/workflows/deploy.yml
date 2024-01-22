@@ -2,11 +2,11 @@ name: Deploy to ECR
 
 on:
  workflow_run:
-  workflows: ["Execute Tests"]
+  workflows: ['Execute Tests']
   types:
-   - 
+   - completed
   branches:
-    - main
+   - main
 
 jobs:
  deploy:
