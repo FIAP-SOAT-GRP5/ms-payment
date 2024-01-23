@@ -101,6 +101,12 @@ jobs:
    - name: Run tests with Jest
      run: npm run test:cov
 
+   - name: fix code coverage paths
+     working-directory: ./coverage
+     run: |
+       sed -i 's/\/home\/runner\/work\/YOUR_PROJECT_ROOT_DIR\/YOUR_PROJECT_ROOT_DIR\//\/github\/workspace\//g' lcov.info
+       sed -i 's/\/home\/runner\/work\/YOUR_PROJECT_ROOT_DIR\/YOUR_PROJECT_ROOT_DIR\//\/github\/workspace\//g' sonar-cloud-reporter.xml
+
    - name: Analyze with SonarCloud
      uses: sonarsource/sonarcloud-github-action@master
      env:
@@ -113,4 +119,3 @@ jobs:
        # mandatory
        -Dsonar.projectKey=FIAP-SOAT-GRP5_ms-order
        -Dsonar.organization=fiap-soat-grp5
-       -Dsonar.sources=src/
