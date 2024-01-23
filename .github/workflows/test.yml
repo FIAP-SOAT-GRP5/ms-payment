@@ -113,7 +113,6 @@ jobs:
        # mandatory
        -Dsonar.projectKey=FIAP-SOAT-GRP5_ms-order
        -Dsonar.organization=fiap-soat-grp5
-       -Dsonar.coverage.exclusions=**/tests/**
        -Dsonar.tests=.
        -Dsonar.javascript.lcov.reportPaths==coverage/lcov.info
        -Dsonar.sources=src/
