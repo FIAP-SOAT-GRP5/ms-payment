@@ -104,8 +104,8 @@ jobs:
    - name: fix code coverage paths
      working-directory: ./coverage
      run: |
-       sed -i 's/\/home\/runner\/work\/YOUR_PROJECT_ROOT_DIR\/YOUR_PROJECT_ROOT_DIR\//\/github\/workspace\//g' lcov.info
-       sed -i 's/\/home\/runner\/work\/YOUR_PROJECT_ROOT_DIR\/YOUR_PROJECT_ROOT_DIR\//\/github\/workspace\//g' sonar-cloud-reporter.xml
+       sed -i 's/\/home\/runner\/work\/ms-order\/ms-order\//\/github\/workspace\//g' lcov.info
+       sed -i 's/\/home\/runner\/work\/ms-order\/ms-order\//\/github\/workspace\//g' sonar-cloud-reporter.xml
 
    - name: Analyze with SonarCloud
      uses: sonarsource/sonarcloud-github-action@master
