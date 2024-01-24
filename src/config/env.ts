@@ -17,6 +17,10 @@ const envSchema = z.object({
 	DB_PASSWORD: z.string(),
 	DB_DATABASE: z.string(),
 
+	MONGO_PORT: z.coerce.number().default(27017),
+	MONGO_USER: z.string(),
+	MONGO_PASSWORD: z.string(),
+
 	JWT_KEY: z.string(),
 
 	QUEUE_CREATE_ORDER_URL: z.string(),
@@ -33,6 +37,10 @@ const envTestSchema = z.object({
 	DB_USERNAME: z.string().optional(),
 	DB_PASSWORD: z.string().optional(),
 	DB_DATABASE: z.string().optional(),
+
+	MONGO_PORT: z.coerce.number().default(27017),
+	MONGO_USER: z.string(),
+	MONGO_PASSWORD: z.string(),
 
 	JWT_KEY: z.string().default('test'),
 

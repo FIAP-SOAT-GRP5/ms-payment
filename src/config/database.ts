@@ -24,6 +24,10 @@ export function getDbConfig(): TypeOrmModuleOptions {
 	};
 }
 
+export function getMongoConfig() {
+	return  `mongodb://${env.MONGO_USER}:${env.MONGO_PASSWORD}@localhost:${env.MONGO_PORT}`;
+}
+
 export default registerAs(
 	'database',
 	() => ({
