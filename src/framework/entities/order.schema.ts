@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { Order } from '../../domain/enterprise/entities/order.entity';
@@ -5,13 +6,21 @@ import { OrderStatusPayment } from '../../domain/enterprise/value-objects/order-
 
 @Schema()
 export class OrderSchema {
-	@Prop()
+	@Prop({
+		type: Number
+	})
 	orderOrigin_id: number;
 
-	@Prop()
+	@Prop({
+		enum: OrderStatusPayment,
+		default: OrderStatusPayment.PROCESSING,
+		type: String
+	})
 	status_payment: OrderStatusPayment;
 
-	@Prop()
+	@Prop({
+		type: String
+	})
 	payment_url: string;
 
 	static toDomain(order: OrderSchema & {
@@ -28,3 +37,4 @@ export class OrderSchema {
 }
 
 export const CreatedOrderSchema = SchemaFactory.createForClass(OrderSchema);
+/* v8 ignore stop */

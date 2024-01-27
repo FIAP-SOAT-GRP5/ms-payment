@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { config } from 'dotenv';
 import { z } from 'zod';
 
@@ -37,3 +38,4 @@ const getEnv = () => {
 const env = getEnv();
 
 export default env;
+/* v8 ignore stop */

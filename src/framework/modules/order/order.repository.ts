@@ -25,7 +25,7 @@ export class OrderRepository implements IOrderRepository {
 	async updateOrderStatusPaymentApproved(
 		id: number
 	): Promise<Order> {
-		await this.orderRepository.findOneAndUpdate({ _id: id }, {
+		await this.orderRepository.findOneAndUpdate({ orderOrigin_id: id }, {
 			status_payment: OrderStatusPayment.APPROVED,
 		});
 		return OrderSchema.toDomain(await this.orderRepository.findOne({ _id: id }));
@@ -34,10 +34,10 @@ export class OrderRepository implements IOrderRepository {
 	async updateOrderStatusPaymentRefused(
 		id: number
 	): Promise<Order> {
-		await this.orderRepository.findOneAndUpdate({ _id: id }, {
+		await this.orderRepository.findOneAndUpdate({ orderOrigin_id: id }, {
 			status_payment: OrderStatusPayment.REFUSED,
 		});
-		return OrderSchema.toDomain(await this.orderRepository.findOne({ _id: id }));
+		return OrderSchema.toDomain(await this.orderRepository.findOne({ orderOrigin_id: id }));
 	}
 
 }

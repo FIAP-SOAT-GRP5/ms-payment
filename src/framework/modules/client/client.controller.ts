@@ -29,12 +29,8 @@ export class ClientController {
 	@Get()
 	public async findAllClient(@Res() res: Response): Promise<void> {
 		try {
-			const clients = await this.getClientUseCase.findAll();
-			if (!clients) {
-				res.status(404).send('Client not found');
-			} else {
-				res.status(200).send({ clients });
-			}
+			const list = await this.getClientUseCase.findAll();
+			res.status(200).send({ list });
 		} catch (error) {
 			res.status(500).send(error.message);
 		}

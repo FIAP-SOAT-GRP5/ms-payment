@@ -1,3 +1,4 @@
+/* v8 ignore start */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { Client } from '../../domain/enterprise/entities/client.entity';
@@ -27,3 +28,4 @@ export class ClientSchema {
 }
 
 export const CreatedClientSchema = SchemaFactory.createForClass(ClientSchema);
+/* v8 ignore stop */

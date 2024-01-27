@@ -1,3 +1,4 @@
+/* v8 ignore start */
 class DataDto {
 	id: string;
 }
@@ -5,3 +6,4 @@ class DataDto {
 export class UpdatePaymentDto {
 	data: DataDto;
 }
+/* v8 ignore stop */

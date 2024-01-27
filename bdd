@@ -1,0 +1,23 @@
+
+> lunch-api@0.0.1 test
+> vitest run
+
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.1.3[39m [90mD:/Repositorios/fiap/ms-payment[39m
+
+ [32m✓[39m test/domain/factories/client/build-create-client.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m test/domain/factories/client/build-get-client.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m✓[39m test/domain/use-cases/client/create-client.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m test/domain/use-cases/client/get-client.use-case.spec.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m✓[39m test/domain/factories/order/build-update-order.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m test/domain/factories/order/build-create-order.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m✓[39m test/domain/use-cases/order/create-order.use-case.spec.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m✓[39m test/domain/use-cases/order/update-order.use-case.spec.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+ [32m✓[39m test/modules/client/client.controller.spec.ts [2m ([22m[2m7 tests[22m[2m)[22m[90m 160[2mms[22m[39m
+ [32m✓[39m test/modules/order/order.controller.spec.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 113[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m10 passed[39m[22m[90m (10)[39m
+[2m      Tests [22m [1m[32m19 passed[39m[22m[90m (19)[39m
+[2m   Start at [22m 19:56:32
+[2m   Duration [22m 2.13s[2m (transform 678ms, setup 1ms, collect 3.69s, tests 310ms, environment 3ms, prepare 2.19s)[22m
+

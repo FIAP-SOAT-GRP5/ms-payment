@@ -8,6 +8,7 @@ export class UpdateOrderUseCase implements IUpdateOrderUseCase {
 		private readonly repository: IOrderRepository,
 		private readonly payment: IPaymentOrderUseCase
 	) {}
+
 	async updateStatusPayment(webhookBody: UpdatePaymentDto): Promise<void> {
 		const { data } = webhookBody;
 		const { id } = data;
