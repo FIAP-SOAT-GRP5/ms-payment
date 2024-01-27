@@ -4,10 +4,20 @@ import { IOrderRepository } from "../../interfaces/order/order-repository.interf
 
 export class GetOrderUseCase implements IGetOrderUseCase {
 	constructor(private readonly repository: IOrderRepository) {}
-	findById(id: number): Promise<Order> {
-		return this.repository.findById(id);
+	findOrderById(id: number): Promise<Order> {
+		return this.repository.findOrderById(id);
 	}
 	listAllOrders(): Promise<Order[]> {
 		return this.repository.listAllOrders();
 	}
+	getProcessingOrders(): Promise<Order[]> {
+		return this.repository.getProcessingOrders();
+	}
+	getApprovedOrders(): Promise<Order[]>{
+		return this.repository.getApprovedOrders();
+	}
+	getRefusedOrders(): Promise<Order[]> {
+		return this.repository.getRefusedOrders();
+	}
+	
 }

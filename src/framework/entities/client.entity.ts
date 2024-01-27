@@ -3,7 +3,7 @@ import { IEntity } from '@/domain/application/interfaces/entity.interface';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
-export class ClientEntity implements IEntity {
+export class ClientSchema implements IEntity {
 	@Prop()
 	id: number;
 
@@ -21,4 +21,4 @@ export class ClientEntity implements IEntity {
 	}
 }
 
-export const ClientSchema = SchemaFactory.createForClass(ClientEntity);
+export const CreatedClientSchema = SchemaFactory.createForClass(ClientSchema);

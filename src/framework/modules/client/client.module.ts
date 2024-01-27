@@ -1,17 +1,15 @@
 /* v8 ignore start */
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClientEntity, ClientSchema } from '../../entities/client.entity';
-
-import { buildGetClientUseCase } from '../../../domain/application/factories/client/get-client.use-case.factory';
 import { buildCreateClientUseCase } from '@/domain/application/factories/client/create-client.use-case.factory';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { buildGetClientUseCase } from '../../../domain/application/factories/client/get-client.use-case.factory';
 import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '../../../domain/application/symbols/client.symbols';
+import { ClientSchema, CreatedClientSchema } from '../../entities/client.entity';
 import { ClientController } from './client.controller';
 import { ClientRepository } from './client.repository';
-import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-	imports: [MongooseModule.forFeature([{name: ClientEntity.name, schema: ClientSchema}])],
+	imports: [MongooseModule.forFeature([{name: ClientSchema.name, schema: CreatedClientSchema}])],
 	providers: [
 		ClientRepository,
 		{

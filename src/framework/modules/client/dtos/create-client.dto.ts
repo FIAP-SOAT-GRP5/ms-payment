@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class CreateClientDto {
 	@ApiProperty()
-	document?: string;
+	document: string;
 
 	@ApiPropertyOptional()
 	name?: string;

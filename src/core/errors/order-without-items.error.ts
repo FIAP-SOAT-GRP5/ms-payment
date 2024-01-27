@@ -1,5 +1,5 @@
-export class OrderWithoutItemsError extends Error {
+export class MercadoPagoServiceError extends Error {
 	constructor() {
-		super('Order must have at least one item');
+		super('Invalid parameters for payment');
 	}
 }

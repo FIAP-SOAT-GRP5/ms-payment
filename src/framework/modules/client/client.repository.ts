@@ -6,13 +6,13 @@ import { CreateClientDto } from '@/domain/enterprise/dtos/create-client.dto';
 import { Client } from '@/domain/enterprise/entities/client.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ClientEntity } from '../../entities/client.entity';
+import { ClientSchema } from '../../entities/client.entity';
 
 @Injectable()
 export class ClientRepository implements IClientRepository {
 	constructor(
-		@InjectModel(ClientEntity.name)
-		private clientRepository: Model<ClientEntity>
+		@InjectModel(ClientSchema.name)
+		private clientRepository: Model<ClientSchema>
 	) {}
 
 	findAll(): Promise<Client[]> {

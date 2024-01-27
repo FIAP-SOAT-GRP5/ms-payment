@@ -1,7 +1,7 @@
 import { ICreateClientUseCase } from '@/domain/application/interfaces/client/create-client.use-case.interface';
 import { IGetClientUseCase } from '@/domain/application/interfaces/client/get-client.use-case.interface';
 import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '@/domain/application/symbols/client.symbols';
-import { ClientEntity } from '@/framework/entities/client.entity';
+import { ClientSchema } from '@/framework/entities/client.entity';
 import {
 	Body,
 	Controller,
@@ -58,7 +58,7 @@ export class ClientController {
 	}
 
 	@Post()
-	@ApiBody({ type: ClientEntity })
+	@ApiBody({ type: ClientSchema })
 	public async create(
 		@Res() res: Response,
 		@Body() body: CreateClientDto

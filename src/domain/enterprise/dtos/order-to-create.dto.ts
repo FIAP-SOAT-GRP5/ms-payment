@@ -1,16 +1,6 @@
-import { OrderStatus } from '../value-objects/order-status';
+import { OrderStatusPayment } from '../value-objects/order-status-payment';
 
 export class OrderToCreateDto {
-	status: OrderStatus;
-	client: {
-		id: number
-	};
-	orderItems?: {
-		price: number;
-		quantity: number;
-		item: {
-			id: number,
-			name: string
-		};
-	}[];
+	id: number;
+	status_payment: OrderStatusPayment;
 }
