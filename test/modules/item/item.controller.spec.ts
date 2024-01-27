@@ -14,8 +14,8 @@ import { UpdateItemDto } from '../../../src/framework/modules/item/dtos/update-i
 import { ItemController } from '../../../src/framework/modules/item/item.controller';
 import { ItemRepository } from '../../../src/framework/modules/item/item.repository';
 import { makeDessertCategory, makeDrinkCategory, makeFollowUpCategory, makeSnackCategory } from '../../factories/makeCategory';
-import { makeItem } from '../../factories/makeItem';
-import { InMemoryItemRepository } from '../../repositories/in-memory-item.repository';
+import { makeItem } from '../../factories/makeClient';
+import { InMemoryItemRepository } from '../../repositories/in-memory-client.repository';
 
 
 const moduleMocker = new ModuleMocker(global);

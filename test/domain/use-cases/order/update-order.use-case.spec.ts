@@ -5,7 +5,7 @@ import { InMemoryOrderRepository } from "../../../repositories/in-memory-order.r
 let inMemoryOrderRepository: InMemoryOrderRepository;
 let sut: GetOrderUseCase;
 
-describe("GetOrderUseCase", () => {
+describe("UpdateOrderUseCase", () => {
 
 	beforeEach(() => {
 		inMemoryOrderRepository = new InMemoryOrderRepository()

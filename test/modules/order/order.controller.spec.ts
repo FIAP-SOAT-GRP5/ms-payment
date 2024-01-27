@@ -18,9 +18,9 @@ import { CreateOrderBodyDto } from '../../../src/framework/modules/order/dtos/cr
 import { OrderController } from '../../../src/framework/modules/order/order.controller';
 import { OrderRepository } from '../../../src/framework/modules/order/order.repository';
 import { QueueGateway } from '../../../src/framework/modules/order/queue.gateway';
-import { makeItem } from '../../factories/makeItem';
+import { makeItem } from '../../factories/makeClient';
 import { makeOrderToCreate } from '../../factories/makeOrder';
-import { InMemoryItemRepository } from '../../repositories/in-memory-item.repository';
+import { InMemoryItemRepository } from '../../repositories/in-memory-client.repository';
 import { InMemoryOrderRepository } from '../../repositories/in-memory-order.repository';
 
 

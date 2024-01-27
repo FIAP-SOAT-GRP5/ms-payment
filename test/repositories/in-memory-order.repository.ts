@@ -1,3 +1,4 @@
+import { OrderStatusPayment } from "@/domain/enterprise/value-objects/order-status-payment";
 import { IOrderRepository } from "../../src/domain/application/interfaces/order/order-repository.interface";
 import { OrderToCreateDto } from "../../src/domain/enterprise/dtos/order-to-create.dto";
 import { Item } from "../../src/domain/enterprise/entities/item.entity";
@@ -23,30 +24,44 @@ export class InMemoryOrderRepository implements IOrderRepository {
 	async create(orderToCreate: OrderToCreateDto): Promise<Order> {
 		const order = new Order();
 		order.id = this.generateId();
-		order.status = orderToCreate.status;
-		order.client_id = orderToCreate.client.id;
-		order.orderItems = orderToCreate.orderItems.map(oi => {
-			const orderItem = new OrderItem();
-			orderItem.price = oi.price;
-			orderItem.quantity = oi.quantity;
-			const item = new Item();
-			item.id = oi.item.id;
-			item.name = oi.item.name;
-			orderItem.item = item;
-			return orderItem;
-		});
-
+		order.status_payment = OrderStatusPayment.PROCESSING
 		this.orders.push(order);
 		return order;
 	}
 
-	async findById(id: number): Promise<Order> {
+	async findOrderById(id: number): Promise<Order> {
 		const order = this.orders.find(o => o.id === id);
 		return order;
 	}
 
 	async listAllOrders(): Promise<Order[]> {
 		return this.orders;
+	}
+
+	async getProcessingOrders(): Promise<Order[]> {
+		return this.orders.filter((order) => order.status_payment === OrderStatusPayment.PROCESSING)
+	}
+
+	async getApprovedOrders(): Promise<Order[]> {
+		return this.orders.filter((order) => order.status_payment === OrderStatusPayment.APPROVED)
+	}
+
+	async getRefusedOrders(): Promise<Order[]> {
+		return this.orders.filter((order) => order.status_payment === OrderStatusPayment.REFUSED)
+	}
+
+	async updateOrderStatusPaymentApproved(id: number): Promise<Order> {
+		const orderToUpdate = await this.findOrderById(id);
+		if(!orderToUpdate) return;
+		orderToUpdate.status_payment = OrderStatusPayment.APPROVED
+		return orderToUpdate;
+	}
+
+	async updateOrderStatusPaymentRefused(id: number): Promise<Order> {
+		const orderToUpdate = await this.findOrderById(id);
+		if(!orderToUpdate) return;
+		orderToUpdate.status_payment = OrderStatusPayment.APPROVED
+		return orderToUpdate;
 	}
 
 }

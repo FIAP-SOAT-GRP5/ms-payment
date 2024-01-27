@@ -1,13 +1,13 @@
+import { ICheckoutGateway } from "@/domain/application/interfaces/checkout/checkout.gateway.interface";
+import { CreateOrderUseCase } from "@/domain/application/use-cases/order/create-order.use-case";
 import { buildCreateOrderUseCase } from "../../../../src/domain/application/factories/order/create-order.use-case.factory";
 import { IQueueGateway } from "../../../../src/domain/application/interfaces/queue/queue.gateway.interface";
-import { GetItemUseCase } from "../../../../src/domain/application/use-cases/item/get-item.use-case";
-import { InMemoryItemRepository } from "../../../repositories/in-memory-item.repository";
 import { InMemoryOrderRepository } from "../../../repositories/in-memory-order.repository";
 
 let queueGateway: IQueueGateway;
 let inMemoryOrderRepository: InMemoryOrderRepository;
-let inMemoryItemRepository: InMemoryItemRepository;
-let getItemUseCase: GetItemUseCase;
+let checkoutGateway: ICheckoutGateway;
+let createOrderUseCase: CreateOrderUseCase;
 
 describe("buildCreateOrderUseCase", () => {
 
@@ -15,13 +15,20 @@ describe("buildCreateOrderUseCase", () => {
 		queueGateway = {
 			send: vi.fn(),
 		}
+		checkoutGateway = {
+			doPayment: vi.fn(),
+			getPayment: vi.fn(),
+		}
+
 		inMemoryOrderRepository = new InMemoryOrderRepository()
-		inMemoryItemRepository = new InMemoryItemRepository()
-		getItemUseCase = new GetItemUseCase(inMemoryItemRepository)
+		createOrderUseCase = new CreateOrderUseCase(
+			inMemoryOrderRepository,
+			checkoutGateway,
+			queueGateway)
 	})
 
 	it("should create a class", async () => {
-		const useCase = buildCreateOrderUseCase(inMemoryOrderRepository, getItemUseCase, queueGateway)
+		const useCase = buildCreateOrderUseCase(inMemoryOrderRepository, checkoutGateway, queueGateway)
 
 		expect(useCase).toBeDefined()
 	})
