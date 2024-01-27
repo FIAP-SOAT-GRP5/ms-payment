@@ -1,12 +1,11 @@
 /* v8 ignore start */
-import { Injectable } from '@nestjs/common';
-import { IClientRepository } from '../../../domain/application/interfaces/client/client-repository.interface';
-
 import { CreateClientDto } from '@/domain/enterprise/dtos/create-client.dto';
 import { Client } from '@/domain/enterprise/entities/client.entity';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { ClientSchema } from '../../entities/client.entity';
+import { IClientRepository } from '../../../domain/application/interfaces/client/client-repository.interface';
+import { ClientSchema } from '../../entities/client.schema';
 
 @Injectable()
 export class ClientRepository implements IClientRepository {
@@ -15,17 +14,20 @@ export class ClientRepository implements IClientRepository {
 		private clientRepository: Model<ClientSchema>
 	) {}
 
-	findAll(): Promise<Client[]> {
-		return this.clientRepository.find().exec();
+	async findAll(): Promise<Client[]> {
+		const result = await this.clientRepository.find().exec();
+		return result.map(ClientSchema.toDomain);
 	}
 
-	findByDocument(document: string): Promise<Client> {
-		return this.clientRepository.findOne( { document } ).exec();
+	async findByDocument(document: string): Promise<Client> {
+		const result = await this.clientRepository.findOne({ document }).exec();
+		return ClientSchema.toDomain(result);
 	}
 
-	createClient(clientToCreate: CreateClientDto): Promise<Client> {
+	async createClient(clientToCreate: CreateClientDto): Promise<Client> {
 		const createdClient = new this.clientRepository(clientToCreate)
-		return createdClient.save();
+		const result = await createdClient.save();
+		return ClientSchema.toDomain(result);
 	}
 }
 /* v8 ignore stop */

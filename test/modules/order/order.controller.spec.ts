@@ -103,7 +103,7 @@ describe('OrderController', () => {
 			const spyFindById = vi.spyOn(getOrderUseCase, 'findById')
 
 			const response = await request(app.getHttpServer())
-				.get(`/order/${order.id}`)
+				.get(`/order/${order._id}`)
 				.send();
 
 			expect(response.body.order).toBeDefined()

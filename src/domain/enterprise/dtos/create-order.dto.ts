@@ -1,7 +1,10 @@
-import { OrderStatus } from '../value-objects/order-status';
-
-class ClientDto {
-	id: number;
+enum OrderStatus {
+	AWAITING_PAYMENT = 'awaiting_payment',
+	RECEIVED = 'received',
+	PROCESSING = 'processing',
+	READY = 'ready',
+	FINISHED = 'finished',
+	CANCELED = 'canceled',
 }
 
 class ItemDto {
@@ -15,14 +18,9 @@ class OrderItemsDto {
 	item: ItemDto;
 }
 
-export class OrderDto {
+export class CreateOrderDto {
 	id: number;
 	status: OrderStatus;
-	client: ClientDto;
+	client_id: string;
 	orderItems: OrderItemsDto[];
-}
-
-export class CreateOrderDto {
-	order: OrderDto;
-	clientId: number;
 }

@@ -17,53 +17,27 @@ export class OrderRepository implements IOrderRepository {
 
 	async create(orderToCreate: OrderToCreateDto): Promise<Order> {
 		const createdOrder = new this.orderRepository(orderToCreate)
-		return createdOrder.save().then((order) => {
-			return this.orderRepository.findOne( { id: order.id } ).exec();
+		return createdOrder.save().then(async (order) => {
+			return OrderSchema.toDomain(await this.orderRepository.findOne({ _id: order._id }).exec());
 		});
-	}
-
-	findOrderById(id: number): Promise<Order> {
-		return this.orderRepository.findOne({id}).exec();
-	}
-
-	listAllOrders(): Promise<Order[]> {
-		return this.orderRepository.find().exec();
-	}
-
-	getProcessingOrders(): Promise<Order[]> {
-		return this.orderRepository.find({
-			'status_payment': OrderStatusPayment.PROCESSING
-		}).exec();
-	}
-
-	getApprovedOrders(): Promise<Order[]> {
-		return this.orderRepository.find({
-			'status_payment': OrderStatusPayment.APPROVED
-		}).exec();
-	}
-
-	getRefusedOrders(): Promise<Order[]> {
-		return this.orderRepository.find({
-			'status_payment': OrderStatusPayment.REFUSED
-		}).exec();
 	}
 
 	async updateOrderStatusPaymentApproved(
 		id: number
 	): Promise<Order> {
-		await this.orderRepository.findOneAndUpdate({ id },{			
+		await this.orderRepository.findOneAndUpdate({ _id: id }, {
 			status_payment: OrderStatusPayment.APPROVED,
 		});
-		return await this.orderRepository.findOne({ id });
+		return OrderSchema.toDomain(await this.orderRepository.findOne({ _id: id }));
 	}
 
 	async updateOrderStatusPaymentRefused(
 		id: number
 	): Promise<Order> {
-		await this.orderRepository.findOneAndUpdate({ id },{			
+		await this.orderRepository.findOneAndUpdate({ _id: id }, {
 			status_payment: OrderStatusPayment.REFUSED,
 		});
-		return await this.orderRepository.findOne({ id });
+		return OrderSchema.toDomain(await this.orderRepository.findOne({ _id: id }));
 	}
 
 }

@@ -23,7 +23,7 @@ describe("CreateClientUseCase", () => {
 
 		const response = await sut.createClient(dto);
 
-		expect(response.id).toBeDefined()
+		expect(response._id).toBeDefined()
 		expect(inMemoryClientRepository.clients).toHaveLength(1)
 	})
 })

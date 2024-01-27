@@ -1,4 +1,4 @@
-import { OrderDto } from "@/domain/enterprise/dtos/create-order.dto";
+import { CreateOrderDto } from "@/domain/enterprise/dtos/create-order.dto";
 
 export interface IPaymentUrl {
 	paymentUrl: string;
@@ -10,6 +10,6 @@ export interface IPaymentData {
 }
 
 export interface ICheckoutGateway {
-	doPayment(id: number, dataOrder: OrderDto): Promise<IPaymentUrl>;
+	doPayment(id: number, dataOrder: CreateOrderDto): Promise<IPaymentUrl>;
 	getPayment(id: number): Promise<IPaymentData>;
 }

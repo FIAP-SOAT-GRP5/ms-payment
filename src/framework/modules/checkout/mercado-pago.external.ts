@@ -1,6 +1,6 @@
 import { MercadoPagoServiceError } from '@/core/errors/order-without-items.error';
 import { ICheckoutGateway, IPaymentData, IPaymentUrl } from '@/domain/application/interfaces/checkout/checkout.gateway.interface';
-import { OrderDto } from '@/domain/enterprise/dtos/create-order.dto';
+import { CreateOrderDto } from '@/domain/enterprise/dtos/create-order.dto';
 import { Injectable } from '@nestjs/common';
 import * as mercadopago from 'mercadopago';
 
@@ -16,7 +16,7 @@ export class MercadoPagoExternal implements ICheckoutGateway {
 		}
 	}
 
-	async doPayment(id: number, data: OrderDto): Promise<IPaymentUrl> {
+	async doPayment(id: number, data: CreateOrderDto): Promise<IPaymentUrl> {
 		const checkoutItems = data.orderItems.map(orderItem => {
 			return {
 				title: orderItem.item.name,

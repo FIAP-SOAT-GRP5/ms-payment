@@ -3,35 +3,28 @@ import { buildUpdateOrderUseCase } from '@/domain/application/factories/order/up
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { buildCreateOrderUseCase } from '../../../domain/application/factories/order/create-order.use-case.factory';
-import { buildGetOrderUseCase } from '../../../domain/application/factories/order/get-order.use-case.factory';
 import {
 	CREATE_ORDER_USE_CASE,
-	GET_ORDER_USE_CASE,
-	UPDATE_ORDER_USE_CASE,
+	UPDATE_ORDER_USE_CASE
 } from '../../../domain/application/symbols/order.symbols';
 import { CreatedOrderSchema, OrderSchema } from '../../entities/order.schema';
 import { MercadoPagoExternal } from '../checkout/mercado-pago.external';
+import { CreateOrderQueueGateway } from './create-order-queue.gateway';
 import { OrderController } from './order.controller';
 import { OrderRepository } from './order.repository';
-import { QueueGateway } from './queue.gateway';
 
 @Module({
 	imports: [
-		MongooseModule.forFeature([{name: OrderSchema.name, schema: CreatedOrderSchema}]),
+		MongooseModule.forFeature([{ name: OrderSchema.name, schema: CreatedOrderSchema }]),
 	],
 	providers: [
 		OrderRepository,
 		MercadoPagoExternal,
-		QueueGateway,
+		CreateOrderQueueGateway,
 		{
 			provide: CREATE_ORDER_USE_CASE,
-			inject: [OrderRepository, MercadoPagoExternal, QueueGateway],
+			inject: [OrderRepository, MercadoPagoExternal],
 			useFactory: buildCreateOrderUseCase,
-		},
-		{
-			provide: GET_ORDER_USE_CASE,
-			inject: [OrderRepository],
-			useFactory: buildGetOrderUseCase,
 		},
 		{
 			provide: UPDATE_ORDER_USE_CASE,

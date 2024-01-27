@@ -1,8 +1,6 @@
 import { OrderStatusPayment } from "@/domain/enterprise/value-objects/order-status-payment";
 import { IOrderRepository } from "../../src/domain/application/interfaces/order/order-repository.interface";
 import { OrderToCreateDto } from "../../src/domain/enterprise/dtos/order-to-create.dto";
-import { Item } from "../../src/domain/enterprise/entities/item.entity";
-import { OrderItem } from "../../src/domain/enterprise/entities/order-item.entity";
 import { Order } from "../../src/domain/enterprise/entities/order.entity";
 
 export class InMemoryOrderRepository implements IOrderRepository {
@@ -13,7 +11,7 @@ export class InMemoryOrderRepository implements IOrderRepository {
 			let biggestId = 0;
 			for (const order of this.orders) {
 				if (order.getId() > biggestId) {
-					biggestId = order.id;
+					biggestId = order._id;
 				}
 			}
 			return biggestId;
@@ -23,14 +21,14 @@ export class InMemoryOrderRepository implements IOrderRepository {
 
 	async create(orderToCreate: OrderToCreateDto): Promise<Order> {
 		const order = new Order();
-		order.id = this.generateId();
+		order._id = this.generateId();
 		order.status_payment = OrderStatusPayment.PROCESSING
 		this.orders.push(order);
 		return order;
 	}
 
 	async findOrderById(id: number): Promise<Order> {
-		const order = this.orders.find(o => o.id === id);
+		const order = this.orders.find(o => o._id === id);
 		return order;
 	}
 
@@ -52,14 +50,14 @@ export class InMemoryOrderRepository implements IOrderRepository {
 
 	async updateOrderStatusPaymentApproved(id: number): Promise<Order> {
 		const orderToUpdate = await this.findOrderById(id);
-		if(!orderToUpdate) return;
+		if (!orderToUpdate) return;
 		orderToUpdate.status_payment = OrderStatusPayment.APPROVED
 		return orderToUpdate;
 	}
 
 	async updateOrderStatusPaymentRefused(id: number): Promise<Order> {
 		const orderToUpdate = await this.findOrderById(id);
-		if(!orderToUpdate) return;
+		if (!orderToUpdate) return;
 		orderToUpdate.status_payment = OrderStatusPayment.APPROVED
 		return orderToUpdate;
 	}

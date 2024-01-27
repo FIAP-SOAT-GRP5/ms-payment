@@ -4,11 +4,6 @@ import { Order } from "../../../enterprise/entities/order.entity";
 
 export interface IOrderRepository {
 	create(orderToCreate: OrderToCreateDto): Promise<Order>;
-	listAllOrders(): Promise<Order[]>;
-	findOrderById(id: number): Promise<Order>;
-	getProcessingOrders(): Promise<Order[]>;
-	getApprovedOrders(): Promise<Order[]>;
-	getRefusedOrders(): Promise<Order[]>;
 	updateOrderStatusPaymentApproved(id: number): Promise<Order>;
 	updateOrderStatusPaymentRefused(id: number): Promise<Order>;
 }

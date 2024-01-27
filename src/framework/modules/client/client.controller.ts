@@ -1,7 +1,7 @@
 import { ICreateClientUseCase } from '@/domain/application/interfaces/client/create-client.use-case.interface';
 import { IGetClientUseCase } from '@/domain/application/interfaces/client/get-client.use-case.interface';
 import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '@/domain/application/symbols/client.symbols';
-import { ClientSchema } from '@/framework/entities/client.entity';
+import { ClientSchema } from '@/framework/entities/client.schema';
 import {
 	Body,
 	Controller,
@@ -67,7 +67,6 @@ export class ClientController {
 			const createdClient = await this.createClientUseCase.createClient(body);
 			res.status(201).send({ client: createdClient });
 		} catch (error) {
-			console.log(error)
 			res.status(500).send(error.message);
 		}
 	}

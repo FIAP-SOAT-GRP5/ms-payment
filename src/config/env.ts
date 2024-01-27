@@ -10,22 +10,11 @@ const envSchema = z.object({
 	TZ: z.string().default('America/São Paulo'),
 	PORT: z.coerce.number().default(3000),
 
-	DB_TYPE: z.enum(['mysql', 'postgres']).default('mysql'),
-	DB_HOST: z.string(),
-	DB_PORT: z.coerce.number().default(3306),
-	DB_USERNAME: z.string(),
-	DB_PASSWORD: z.string(),
-	DB_DATABASE: z.string(),
-
-	MONGO_PORT: z.coerce.number().default(27017),
-	MONGO_USER: z.string(),
-	MONGO_PASSWORD: z.string(),
-
-	JWT_KEY: z.string(),
-
-	MP_ACCESS_TOKEN: z.string(),
+	DATABASE_URL: z.string().url(),
 
 	QUEUE_CREATE_ORDER_URL: z.string(),
+	MP_ACCESS_TOKEN: z.string(),
+	AWS_REGION: z.string(),
 });
 
 const envTestSchema = z.object({
@@ -33,21 +22,11 @@ const envTestSchema = z.object({
 	TZ: z.string().default('America/São Paulo'),
 	PORT: z.coerce.number().default(3000),
 
-	DB_TYPE: z.enum(['mysql', 'postgres']).default('mysql'),
-	DB_HOST: z.string().optional(),
-	DB_PORT: z.coerce.number().default(3306),
-	DB_USERNAME: z.string().optional(),
-	DB_PASSWORD: z.string().optional(),
-	DB_DATABASE: z.string().optional(),
-
-	MONGO_PORT: z.coerce.number().default(27017),
-	MONGO_USER: z.string(),
-	MONGO_PASSWORD: z.string(),
-
-	JWT_KEY: z.string().default('test'),
+	DATABASE_URL: z.string().url().optional(),
 
 	QUEUE_CREATE_ORDER_URL: z.string().optional(),
 	MP_ACCESS_TOKEN: z.string().optional(),
+	AWS_REGION: z.string().optional(),
 });
 
 const getEnv = () => {

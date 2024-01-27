@@ -1,6 +1,5 @@
 import { Client } from "@/domain/enterprise/entities/client.entity";
 import { IClientRepository } from "../../src/domain/application/interfaces/client/client-repository.interface";
-import { Item } from "../../src/domain/enterprise/entities/item.entity";
 
 export class InMemoryClientRepository implements IClientRepository {
 	clients: Client[] = [];
@@ -10,7 +9,7 @@ export class InMemoryClientRepository implements IClientRepository {
 			let biggestId = 0;
 			for (const client of this.clients) {
 				if (client.getId() > biggestId) {
-					biggestId = client.id;
+					biggestId = client._id;
 				}
 			}
 			return biggestId;
@@ -27,9 +26,9 @@ export class InMemoryClientRepository implements IClientRepository {
 	}
 
 	async createClient(client: Client): Promise<Client> {
-		client.id = this.generateId();
+		client._id = this.generateId();
 		this.clients.push(client);
 		return client;
 	}
-	
+
 }
