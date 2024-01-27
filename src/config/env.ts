@@ -23,6 +23,8 @@ const envSchema = z.object({
 
 	JWT_KEY: z.string(),
 
+	MP_ACCESS_TOKEN: z.string(),
+
 	QUEUE_CREATE_ORDER_URL: z.string(),
 });
 
@@ -45,6 +47,7 @@ const envTestSchema = z.object({
 	JWT_KEY: z.string().default('test'),
 
 	QUEUE_CREATE_ORDER_URL: z.string().optional(),
+	MP_ACCESS_TOKEN: z.string().optional(),
 });
 
 const getEnv = () => {

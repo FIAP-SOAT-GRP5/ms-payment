@@ -15,7 +15,7 @@ class OrderItemsDto {
 	item: ItemDto;
 }
 
-class OrderDto {
+export class OrderDto {
 	id: number;
 	status: OrderStatus;
 	client: ClientDto;

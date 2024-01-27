@@ -48,5 +48,23 @@ export class OrderRepository implements IOrderRepository {
 		}).exec();
 	}
 
+	async updateOrderStatusPaymentApproved(
+		id: number
+	): Promise<Order> {
+		await this.orderRepository.findOneAndUpdate({ id },{			
+			status_payment: OrderStatusPayment.APPROVED,
+		});
+		return await this.orderRepository.findOne({ id });
+	}
+
+	async updateOrderStatusPaymentRefused(
+		id: number
+	): Promise<Order> {
+		await this.orderRepository.findOneAndUpdate({ id },{			
+			status_payment: OrderStatusPayment.REFUSED,
+		});
+		return await this.orderRepository.findOne({ id });
+	}
+
 }
 /* v8 ignore stop */

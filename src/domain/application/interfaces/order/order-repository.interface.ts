@@ -9,5 +9,7 @@ export interface IOrderRepository {
 	getProcessingOrders(): Promise<Order[]>;
 	getApprovedOrders(): Promise<Order[]>;
 	getRefusedOrders(): Promise<Order[]>;
+	updateOrderStatusPaymentApproved(id: number): Promise<Order>;
+	updateOrderStatusPaymentRefused(id: number): Promise<Order>;
 }
 /* v8 ignore stop */

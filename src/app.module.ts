@@ -5,6 +5,8 @@ import { AuthModule } from './framework/modules/auth/auth.module';
 import { OrderModule } from './framework/modules/order/order.module';
 import { ClientModule } from './framework/modules/client/client.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CheckoutModule } from './framework/modules/checkout/checkout.module';
+import './config/mercadopago';
 
 @Module({
 	imports: [
@@ -14,7 +16,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 		MongooseModule.forRoot(getMongoConfig()),
 		OrderModule,
 		AuthModule,
-		ClientModule
+		ClientModule,
+		CheckoutModule
 	],
 })
 export class AppModule {}
