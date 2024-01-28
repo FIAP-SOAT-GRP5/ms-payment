@@ -43,6 +43,7 @@ jobs:
       envkey_AWS_REGION: ${{ vars.AWS_REGION }}
       envkey_MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
       envkey_QUEUE_CREATE_ORDER_URL: ${{ vars.QUEUE_CREATE_ORDER_URL }}
+      envkey_QUEUE_UPDATE_ORDER_URL: ${{ vars.QUEUE_UPDATE_ORDER_URL }}
 
    - name: Build, tag, and push image to Amazon ECR
      id: build-image
