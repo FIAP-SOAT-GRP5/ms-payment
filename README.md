@@ -15,7 +15,7 @@ Siga as instruções abaixo para obter uma cópia do projeto localmente e execut
 
 1. Faça o download do repositório do projeto:
 ```shell
-git clone https://github.com/thegabslima/lunch-api.git
+git clone https://github.com/FIAP-SOAT-GRP5/ms-payment.git
 ```
 
 2. Instale as dependências necessárias:
@@ -98,6 +98,26 @@ Lembre-se de substituir `{document}` pelo documento real do cliente.
 
 ### Pedido(s)
 
+#### Criar
+
+Para criar um pedido, enviar um pedido para a fila create_order_payment
+
+Exemplo de como preencher os valores para cadastrar um pedido:
+```json
+{
+  "id": 1,
+  "status": "awaiting_payment",
+  "orderItems": {
+    "price": 1,
+    "quantity": 2
+    "item": {
+      "id": 1
+      "name": "test"
+    }
+  } 
+}
+```
+
 #### Atualizar
 
 Esta rota recebe o Id do pedido via webhook do mercado pago e atualiza o campo status_payment do pedido.
@@ -107,15 +127,6 @@ Endpoint: `POST /order/status/payment`
 Exemplo de valor com id do pedido enviado pelo Mercado Pago:
 ```json
 {
-  "action": "payment.created",
-  "api_version": "v1",
-  "data": {
-    "id": "62751724962"
-  },
-  "date_created": "2023-08-26T14:16:59Z",
-  "id": 107253998802,
-  "live_mode": true,
-  "type": "payment",
-  "user_id": "1455021943"
+  "id": "62751724962"
 }
 ```
