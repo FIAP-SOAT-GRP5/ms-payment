@@ -11,10 +11,10 @@ const envSchema = z.object({
 	TZ: z.string().default('America/São Paulo'),
 	PORT: z.coerce.number().default(3000),
 
-	DATABASE_URL: z.string().url(),
-
 	QUEUE_CREATE_ORDER_URL: z.string(),
 	MP_ACCESS_TOKEN: z.string(),
+	AWS_ACCESS_KEY_ID: z.string(),
+	AWS_SECRET_ACCESS_KEY: z.string(),
 	AWS_REGION: z.string(),
 });
 
@@ -23,10 +23,10 @@ const envTestSchema = z.object({
 	TZ: z.string().default('America/São Paulo'),
 	PORT: z.coerce.number().default(3000),
 
-	DATABASE_URL: z.string().url().optional(),
-
 	QUEUE_CREATE_ORDER_URL: z.string().optional(),
 	MP_ACCESS_TOKEN: z.string().optional(),
+	AWS_ACCESS_KEY_ID: z.string().optional(),
+	AWS_SECRET_ACCESS_KEY: z.string().optional(),
 	AWS_REGION: z.string().optional(),
 });
 

@@ -1,7 +1,6 @@
 import { ICreateClientUseCase } from '@/domain/application/interfaces/client/create-client.use-case.interface';
 import { IGetClientUseCase } from '@/domain/application/interfaces/client/get-client.use-case.interface';
 import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '@/domain/application/symbols/client.symbols';
-import { ClientSchema } from '@/framework/entities/client.schema';
 import {
 	Body,
 	Controller,
@@ -12,7 +11,7 @@ import {
 	Post,
 	Res,
 } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CreateClientDto } from './dtos/create-client.dto';
 
@@ -54,7 +53,6 @@ export class ClientController {
 	}
 
 	@Post()
-	@ApiBody({ type: ClientSchema })
 	public async create(
 		@Res() res: Response,
 		@Body() body: CreateClientDto
