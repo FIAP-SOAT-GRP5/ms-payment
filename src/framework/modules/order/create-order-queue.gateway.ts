@@ -16,7 +16,7 @@ export class CreateOrderQueueGateway implements OnApplicationBootstrap, OnApplic
 		private readonly createOrderUseCase: ICreateOrderUseCase
 	) {
 		this.consumer = Consumer.create({
-			queueUrl: env.QUEUE_CREATE_ORDER_URL ?? '',
+			queueUrl: `${env.QUEUE_CREATE_ORDER_URL ?? ''}_payment`,
 			region: env.AWS_REGION,
 			handleMessage: async (message) => {
 				const dto = JSON.parse(message.Body) as CreateOrderDto;
