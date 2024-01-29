@@ -1,8 +1,8 @@
+import mercadopago from '@/config/mercadopago';
 import { MercadoPagoServiceError } from '@/core/errors/order-without-items.error';
 import { ICheckoutGateway, IPaymentData, IPaymentUrl } from '@/domain/application/interfaces/checkout/checkout.gateway.interface';
 import { CreateOrderDto } from '@/domain/enterprise/dtos/create-order.dto';
 import { Injectable } from '@nestjs/common';
-import * as mercadopago from 'mercadopago';
 
 @Injectable()
 export class MercadoPagoExternal implements ICheckoutGateway {

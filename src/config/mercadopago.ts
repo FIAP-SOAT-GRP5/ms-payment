@@ -5,4 +5,6 @@ console.log('env.MP_ACCESS_TOKEN', env.MP_ACCESS_TOKEN)
 mercadopago.configure({
 	access_token: env.MP_ACCESS_TOKEN
 });
+
+export default mercadopago;
 /* v8 ignore stop */
