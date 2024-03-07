@@ -4,10 +4,6 @@ import { ClientModule } from './framework/modules/client/client.module';
 import { OrderModule } from './framework/modules/order/order.module';
 
 @Module({
-	imports: [
-		OrderModule,
-		ClientModule,
-		CheckoutModule
-	],
+	imports: [OrderModule, ClientModule, CheckoutModule],
 })
 export class AppModule {}
