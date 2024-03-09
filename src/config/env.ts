@@ -12,6 +12,8 @@ const envSchema = z.object({
 	PORT: z.coerce.number().default(3000),
 
 	QUEUE_CREATE_ORDER_URL: z.string(),
+	QUEUE_PAYMENT_APPROVED_URL: z.string(),
+	QUEUE_PAYMENT_CANCELED_URL: z.string(),
 	MP_ACCESS_TOKEN: z.string(),
 	AWS_ACCESS_KEY_ID: z.string(),
 	AWS_SECRET_ACCESS_KEY: z.string(),
@@ -24,6 +26,8 @@ const envTestSchema = z.object({
 	PORT: z.coerce.number().default(3000),
 
 	QUEUE_CREATE_ORDER_URL: z.string().optional(),
+	QUEUE_PAYMENT_APPROVED_URL: z.string().optional(),
+	QUEUE_PAYMENT_CANCELED_URL: z.string().optional(),
 	MP_ACCESS_TOKEN: z.string().optional(),
 	AWS_ACCESS_KEY_ID: z.string().optional(),
 	AWS_SECRET_ACCESS_KEY: z.string().optional(),
