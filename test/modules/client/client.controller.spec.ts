@@ -1,3 +1,5 @@
+import { buildUpdateClientToAnonymousUseCase } from '@/domain/application/factories/client/update-client-to-anonymous.use-case.factory';
+import { IUpdateClientToAnonymousUseCase } from '@/domain/application/interfaces/client/update-client-to-anonymous.use-case.interface';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
@@ -6,7 +8,7 @@ import { buildCreateClientUseCase } from '../../../src/domain/application/factor
 import { buildGetClientUseCase } from '../../../src/domain/application/factories/client/get-client.use-case.factory';
 import { ICreateClientUseCase } from '../../../src/domain/application/interfaces/client/create-client.use-case.interface';
 import { IGetClientUseCase } from '../../../src/domain/application/interfaces/client/get-client.use-case.interface';
-import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE } from '../../../src/domain/application/symbols/client.symbols';
+import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE, UPDATE_CLIENT_TO_ANONYMOUS_USE_CASE } from '../../../src/domain/application/symbols/client.symbols';
 import { ClientController } from '../../../src/framework/modules/client/client.controller';
 import { ClientRepository } from '../../../src/framework/modules/client/client.repository';
 import { CreateClientDto } from '../../../src/framework/modules/client/dtos/create-client.dto';
@@ -20,6 +22,7 @@ describe('ClientController', () => {
 	let inMemoryClientRepository: InMemoryClientRepository;
 	let getClientUseCase: IGetClientUseCase;
 	let createClientUseCase: ICreateClientUseCase;
+	let updateClientToAnonymousUseCase: IUpdateClientToAnonymousUseCase
 	let app: INestApplication;
 
 	beforeEach(async () => {
@@ -43,6 +46,11 @@ describe('ClientController', () => {
 					inject: [ClientRepository],
 					useFactory: buildCreateClientUseCase,
 				},
+				{
+					provide: UPDATE_CLIENT_TO_ANONYMOUS_USE_CASE,
+					inject: [ClientRepository],
+					useFactory: buildUpdateClientToAnonymousUseCase,
+				},
 			]
 		}).useMocker((token) => {
 			if (typeof token === 'function') {
@@ -58,6 +66,7 @@ describe('ClientController', () => {
 
 		getClientUseCase = module.get(GET_CLIENT_USE_CASE)
 		createClientUseCase = module.get(CREATE_CLIENT_USE_CASE)
+		updateClientToAnonymousUseCase = module.get(UPDATE_CLIENT_TO_ANONYMOUS_USE_CASE)
 
 		await app.init()
 	});
@@ -149,6 +158,33 @@ describe('ClientController', () => {
 
 			const response = await request(app.getHttpServer())
 				.post('/client')
+				.send();
+			expect(response.statusCode).toBe(500)
+		});
+	})
+
+	describe('[PUT] /client/:id', () => {
+		it('should update client', async () => {
+			const client = await inMemoryClientRepository.createClient(makeClient())
+
+			const spyCreateClient = vi.spyOn(updateClientToAnonymousUseCase, 'updateClient')
+
+			const response = await request(app.getHttpServer())
+				.put(`/client/${client._id}`)
+				.send();
+				
+			expect(response.body.client).toBeDefined()
+			expect(response.statusCode).toBe(201)
+			expect(spyCreateClient).toHaveBeenCalled()
+		});
+
+		it('should return 500', async () => {
+			vi.spyOn(updateClientToAnonymousUseCase, 'updateClient').mockImplementationOnce(() => {
+				throw new Error('Test')
+			})
+
+			const response = await request(app.getHttpServer())
+				.put('/client/error')
 				.send();
 			expect(response.statusCode).toBe(500)
 		});
