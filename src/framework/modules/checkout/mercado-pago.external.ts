@@ -32,12 +32,10 @@ export class MercadoPagoExternal implements ICheckoutGateway {
 		};
 		const paymentUrl = await mercadopago.preferences.create(preference)
 			.then((response) => {
-				console.log('response', response)
 				return {
 					paymentUrl: response.body.init_point
 				}
 			}).catch((error) => {
-				console.error(error)
 				throw new MercadoPagoServiceError(error)
 			});
 		return paymentUrl

@@ -1,5 +1,6 @@
 import { ICreateClientUseCase } from '@/domain/application/interfaces/client/create-client.use-case.interface';
 import { IGetClientUseCase } from '@/domain/application/interfaces/client/get-client.use-case.interface';
+import { IUpdateClientToAnonymousUseCase } from '@/domain/application/interfaces/client/update-client-to-anonymous.use-case.interface';
 import { CREATE_CLIENT_USE_CASE, GET_CLIENT_USE_CASE, UPDATE_CLIENT_TO_ANONYMOUS_USE_CASE } from '@/domain/application/symbols/client.symbols';
 import {
 	Body,
@@ -15,7 +16,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CreateClientDto } from './dtos/create-client.dto';
-import { IUpdateClientToAnonymousUseCase } from '@/domain/application/interfaces/client/update-client-to-anonymous.use-case.interface';
 
 @Controller('client')
 @ApiTags('Client')

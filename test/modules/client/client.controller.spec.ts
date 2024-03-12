@@ -174,6 +174,9 @@ describe('ClientController', () => {
 				.send();
 				
 			expect(response.body.client).toBeDefined()
+			expect(response.body.client.name).toBe('')
+			expect(response.body.client.email).toBe('')
+			expect(response.body.client.document).toBe('12345678909')
 			expect(response.statusCode).toBe(201)
 			expect(spyCreateClient).toHaveBeenCalled()
 		});
@@ -184,7 +187,7 @@ describe('ClientController', () => {
 			})
 
 			const response = await request(app.getHttpServer())
-				.put('/client/error')
+				.put('/client/error-test')
 				.send();
 			expect(response.statusCode).toBe(500)
 		});
