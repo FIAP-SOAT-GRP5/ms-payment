@@ -25,9 +25,9 @@ export class InMemoryClientRepository implements IClientRepository {
 			throw new Error('Client not found');
 		}
 
-		this.clients[clientIndex].document = '12345678909'
-		this.clients[clientIndex].name = ''
-		this.clients[clientIndex].email = ''
+		this.clients[clientIndex].document = client.document;
+		this.clients[clientIndex].name = client.name;
+		this.clients[clientIndex].email = client.email;
 
 		return this.clients[clientIndex]
 	}
