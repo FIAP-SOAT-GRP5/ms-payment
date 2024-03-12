@@ -19,15 +19,15 @@ export class InMemoryClientRepository implements IClientRepository {
 		return client;
 	}
 
-	async updateClientToAnonymous(id: string, client: CreateClientDto): Promise<Client> {
+	async updateClientToAnonymous(id: string, clientAnonymous: CreateClientDto): Promise<Client> {
 		const clientIndex = this.clients.findIndex(client => `${client._id}` === `${id}`);
 		if (clientIndex === -1) {
 			throw new Error('Client not found');
 		}
 
-		this.clients[clientIndex].document = client.document;
-		this.clients[clientIndex].name = client.name;
-		this.clients[clientIndex].email = client.email;
+		this.clients[clientIndex].document = clientAnonymous.document;
+		this.clients[clientIndex].name = clientAnonymous.name
+		this.clients[clientIndex].email = clientAnonymous.email
 
 		return this.clients[clientIndex]
 	}
