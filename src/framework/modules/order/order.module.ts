@@ -10,12 +10,14 @@ import { MercadoPagoExternal } from '../checkout/mercado-pago.external';
 import { CreateOrderQueueGateway } from './create-order-queue.gateway';
 import { OrderController } from './order.controller';
 import { OrderRepository } from './order.repository';
+import { PaymentQueueGateway } from './payment-queue.gateway';
 
 @Module({
 	providers: [
 		OrderRepository,
 		MercadoPagoExternal,
 		CreateOrderQueueGateway,
+		PaymentQueueGateway,
 		{
 			provide: CREATE_ORDER_USE_CASE,
 			inject: [OrderRepository, MercadoPagoExternal],
@@ -23,7 +25,7 @@ import { OrderRepository } from './order.repository';
 		},
 		{
 			provide: UPDATE_ORDER_USE_CASE,
-			inject: [OrderRepository, MercadoPagoExternal],
+			inject: [OrderRepository, MercadoPagoExternal, PaymentQueueGateway],
 			useFactory: buildUpdateOrderUseCase,
 		},
 	],
