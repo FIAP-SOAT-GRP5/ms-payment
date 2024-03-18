@@ -96,6 +96,24 @@ Endpoint: `GET /client/{document}`
 
 Lembre-se de substituir `{document}` pelo documento real do cliente.
 
+#### Atualizar
+
+Utilize a rota abaixo para realizar a proteção de dados do cliente.
+
+Endpoint: `PUT /client/{id}`
+
+Lembre-se de substituir `{id}` pelo id real do cliente.
+
+Exemplo de valor retornado por esta rota:
+```json
+{
+  "id": 1,
+  "document": "12345678909",
+  "name": "",
+  "email": ""
+}
+```
+
 ### Pedido(s)
 
 #### Criar
