@@ -1,10 +1,12 @@
 import { IPaymentOrderUseCase } from "../../../../src/domain/application/interfaces/order/payment-order.use-case.interface";
+import { IPaymentQueueGateway } from "../../../../src/domain/application/interfaces/order/payment-queue.gateway.interface";
 import { UpdateOrderUseCase } from "../../../../src/domain/application/use-cases/order/update-order.use-case";
 import { OrderStatusPayment } from "../../../../src/domain/enterprise/value-objects/order-status-payment";
 import { InMemoryOrderRepository } from "../../../repositories/in-memory-order.repository";
 
 let inMemoryOrderRepository: InMemoryOrderRepository;
 let paymentOrderUseCase: IPaymentOrderUseCase;
+let paymentApprovedQueue: IPaymentQueueGateway;
 let sut: UpdateOrderUseCase;
 
 describe("UpdateOrderUseCase", () => {
@@ -24,9 +26,13 @@ describe("UpdateOrderUseCase", () => {
 				}
 			}),
 		}
+		paymentApprovedQueue = {
+			sendApproved: vi.fn(),
+			sendCANCELED: vi.fn(),
+		}
 
 		inMemoryOrderRepository = new InMemoryOrderRepository()
-		sut = new UpdateOrderUseCase(inMemoryOrderRepository, paymentOrderUseCase)
+		sut = new UpdateOrderUseCase(inMemoryOrderRepository, paymentOrderUseCase, paymentApprovedQueue)
 	})
 
 	it("should be able to update approved order", async () => {
