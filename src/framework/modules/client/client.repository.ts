@@ -21,5 +21,9 @@ export class ClientRepository implements IClientRepository {
 	async createClient(clientToCreate: CreateClientDto): Promise<Client> {
 		return CreatedClientSchema.create(clientToCreate).then(toDomain);
 	}
+
+	async updateClientToAnonymous(id: string, clientToUpdate: CreateClientDto): Promise<Client> {
+		return CreatedClientSchema.update({ _id: id }, clientToUpdate).then(toDomain);
+	}
 }
 /* v8 ignore stop */

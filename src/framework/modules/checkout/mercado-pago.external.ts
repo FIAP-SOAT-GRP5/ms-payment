@@ -36,7 +36,6 @@ export class MercadoPagoExternal implements ICheckoutGateway {
 					paymentUrl: response.body.init_point
 				}
 			}).catch((error) => {
-				console.error(error)
 				throw new MercadoPagoServiceError(error)
 			});
 		return paymentUrl

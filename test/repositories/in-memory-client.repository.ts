@@ -1,3 +1,4 @@
+import { CreateClientDto } from "@/domain/enterprise/dtos/create-client.dto";
 import { Client } from "@/domain/enterprise/entities/client.entity";
 import { IClientRepository } from "../../src/domain/application/interfaces/client/client-repository.interface";
 
@@ -18,4 +19,16 @@ export class InMemoryClientRepository implements IClientRepository {
 		return client;
 	}
 
+	async updateClientToAnonymous(id: string, clientAnonymous: CreateClientDto): Promise<Client> {
+		const clientIndex = this.clients.findIndex(client => `${client._id}` === `${id}`);
+		if (clientIndex === -1) {
+			throw new Error('Client not found');
+		}
+
+		this.clients[clientIndex].document = clientAnonymous.document;
+		this.clients[clientIndex].name = clientAnonymous.name
+		this.clients[clientIndex].email = clientAnonymous.email
+
+		return this.clients[clientIndex]
+	}
 }

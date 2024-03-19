@@ -6,5 +6,6 @@ export interface IClientRepository {
 	findAll(): Promise<Client[]>;
 	findByDocument(document: string): Promise<Client>;
 	createClient(client: CreateClientDto): Promise<Client>;
+	updateClientToAnonymous(id: string, client: CreateClientDto): Promise<Client>;
 }
 /* v8 ignore stop */
